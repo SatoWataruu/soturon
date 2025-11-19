@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>架空の事柄について賛否を問うアンケート</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --muted:#6b7280;
+  --accent:#1d9bf0;
+  --card:#f8fafc;
+  --infoBg:#f9fafb;
+}
+body{font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;margin:0;padding:20px;background:#f3f4f6;color:#111;}
+.container{max-width:920px;margin:0 auto;background:var(--bg);padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06);}
+h1{margin:0 0 12px;font-size:1.4rem;}
+p.small{color:var(--muted);margin:8px 0 12px;font-size:0.95rem;line-height:1.6;}
+.infoBox{background:var(--infoBg);border:1px solid #eee;padding:14px;border-radius:8px;color:#0b1223;}
+.btn{display:inline-block;padding:8px 12px;border-radius:8px;cursor:pointer;border:0;font-weight:600;}
+.btn.primary{background:var(--accent);color:#fff;}
+.btn.outline{background:#fff;color:#111;border:1px solid #ddd;}
+.navRow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+section{margin-top:18px;}
+.hidden{display:none;}
+ul{margin:8px 0 12px 18px;}
+.timeline{margin-top:12px;max-height:360px;overflow:auto;padding-right:6px;}
+.post{display:flex;gap:12px;padding:12px 8px;border-bottom:1px solid #f0f0f0;background:#fff;margin-bottom:6px;border-radius:8px;align-items:flex-start;}
+.avatar{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex:0 0 48px;}
+.post-body{flex:1;}
+.meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:0.92rem;margin-bottom:6px;}
+.handle{color:var(--muted);}
+.post-text{font-size:0.98rem;color:#111;margin-bottom:8px;white-space:pre-wrap;}
+//タイムライン
+/* いいねボタン */
+.like-btn {
+  margin-top: 8px;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: #f5f5f5;
+  font-size: 15px;
+  line-height: 22px;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.like-btn:hover {
+  background: #e8e8e8;
+}
+
+/* 押した状態（赤く） */
+.like-btn.liked {
+  background: #ffe3ec;
+  color: #e0245e;
+}
+
+/* ポンっと跳ねるアニメーション */
+.like-btn.pop {
+  transform: scale(1.25);
+}
+
+/* なめらかに戻る */
+.like-btn {
+  transition: transform 0.15s ease-out;
+}
+
+/* ハートのサイズ調整 */
+.like-btn .like-num {
+  font-size: 14px;
+}
+
+.timeline {
+  background: #fff;
+  border-radius: 16px;
+  padding: 8px 4px;
+  max-height: 380px;
+  overflow-y: auto;
+  box-shadow: inset 0 0 0 1px #eee;
+}
+.post {
+  display: flex;
+  gap: 12px;
+  padding: 14px 10px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 0;
+}
+.post:last-child {
+  border-bottom: none;
+}
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+.meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.post-text {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+
+.post {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta .handle {
+  color: #9ca3af;
+}
+
+.post-text {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.like-btn {
+  margin-top: 6px;
+  padding: 6px 14px;
+  border-radius: 1000px;
+  background: #f3f4f6;
+}
+
+.like-btn.liked {
+  background: #ffe0eb;
+  color: #e0245e;
+}
+
+
+
+//UI
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+section {
+  margin-top: 24px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+//フォント
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p, li {
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.post {
+  border-radius: 12px;
+  padding: 14px 12px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+  margin-bottom: 12px;
+}
+.post:hover {
+  background: #fafafa;
+}
+
+
+
+
+//ボタンUI
+.btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(29,155,240,0.3);
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29,155,240,0.35);
+}
+
+.btn.outline {
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.btn.outline:hover {
+  background: #f5f5f5;
+}
+
+//読ませやすさ
+p.small, .infoBox {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #374151;
+}
+
+.infoBox {
+  background: #f9fafb;
+  border-left: 4px solid var(--accent);
+}
+
+//スマホ最適化
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .post {
+    padding: 12px 6px;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+//読ませやすさ
+p.small, .infoBox {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #374151;
+}
+
+.infoBox {
+  background: #f9fafb;
+  border-left: 4px solid var(--accent);
+}
+
+
+
+
+</style>
+</head>
+<body>
+<div class="container">
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
+
+<section id="consentSection">
+<h2>同意と注意</h2>
+<div class="infoBox">
+
+<p><strong>アンケートについて</strong><br>
+このアンケートは、卒業研究の一環として実施する、<strong>完全に架空の設定を題材とした意見調査</strong>です。  
+みなさんがどのように情報を受け止め、賛否を判断するのか、その傾向を知ることを目的としています。  
+現実のサービス・実在の人物や団体とは関係ありませんので、気軽にご参加ください。</p>
+
+<p><strong>参加にあたってのお願い</strong></p>
+
+<p><strong>・任意参加で、辞めても問題なし：</strong><br>
+アンケートは完全に自由参加です。途中でページを閉じても構いません。</p>
+
+<p><strong>・架空の内容を扱います：</strong><br>
+質問や設定には、実際には存在しない装置・儀式・制度などが登場します。  
+回答はあくまで「もし本当にあったら…」という想像を楽しむ気持ちでお願いします。</p>
+
+<p><strong>・心理的負荷について：</strong><br>
+テーマによっては、過去の選択や記憶について「もしも」を考える場面があります。  
+不快に感じた場合は無理をせず、いつでも中断してください。</p>
+
+<p><strong>・個人情報の保護：</strong><br>
+回答は匿名で収集されます。氏名・連絡先など、個人が特定される情報は入力しないでください。</p>
+
+<p><strong>・研究目的：</strong><br>
+集めたデータは、卒業研究における統計分析に使用します。  
+公開される場合も匿名化され、個人が特定される形では扱われません。</p>
+
+<hr>
+
+<h3>アンケートの進み方</h3>
+
+<p>このアンケートは、以下のステップで進みます。  
+全体で 5〜7 分ほどを想定しています。</p>
+
+<p><strong>1. 同意確認：</strong><br>
+上記の説明を読んだうえで、参加するかどうかを選択します。</p>
+
+<p><strong>2. 基礎説明（任意）：</strong><br>
+年齢・性別など、簡単な基本情報をお聞きします。すべて匿名で、空欄でも構いません。</p>
+
+<p><strong>3. 架空設定の紹介：</strong><br>
+今回扱う「架空の装置・儀式・制度」について、短い説明文を読みます。</p>
+
+<p><strong>4. 最初の賛否（スライダー形式）：</strong><br>
+説明を読んだ直後の、あなたの率直な意見をお聞きします。</p>
+
+<p><strong>5. 追加情報（事実や事例）：</strong><br>
+そのテーマに関する中立的な追加情報が 1〜7 件ランダムで表示されます。</p>
+
+<p><strong>6. 主観的な意見（SNS風タイムライン）：</strong><br>
+他の人の「もしこんなテーマがあったら私はこう思う」という意見が複数表示されます。</p>
+
+<p><strong>7. 最終の意見：</strong><br>
+追加情報・他者意見を読んだうえで、考えが変化したかどうかをスライダーで回答します。</p>
+
+<p><strong>8. 回答完了：</strong><br>
+最終意見を送信すると結果の確認ができ、希望される方はデータを CSV でダウンロードできます。</p>
+
+<p>すべて画面内で完結し、外部への送信は行われませんので、安心してご参加ください。</p>
+
+
+</div>
+<div class="navRow">
+<button id="agreeBtn" class="btn primary">同意して開始</button>
+</div>
+</section>
+
+<section id="basicSection" class="hidden">
+<h2>基礎説明</h2>
+<div class="infoBox" id="basicText"></div>
+<div class="navRow">
+<button id="backToConsent" class="btn outline">戻る</button>
+<button id="toInfoBtn" class="btn primary">次へ（追加情報）</button>
+</div>
+</section>
+
+<section id="infoSection" class="hidden">
+<h2>追加情報（事実・事例）</h2>
+<p class="small">1〜7件がランダムに表示されます。</p>
+<div id="infoBox" class="infoBox"></div>
+<div class="navRow">
+<button id="backToBasic" class="btn outline">戻る</button>
+<button id="toOpinionBtn" class="btn primary">次へ（意見）</button>
+</div>
+</section>
+
+<section id="sliderOpinionSection" class="hidden">
+<h2>意見（スライダーで選択）</h2>
+<p class="small" id="sliderDesc">あなたの意見を選択してください。</p>
+<div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
+<div id="opinionBar" style="height:100%; width:50%; border-radius: 8px;"></div>
+<div id="opinionValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
+</div>
+<input type="range" id="opinionSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+<div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:4px;">
+<span>0 反対</span><span>50 どちらでもない</span><span>100 賛成</span>
+</div>
+<div class="navRow" style="margin-top:12px;">
+<button id="backToInfoFromSlider" class="btn outline">戻る</button>
+<button id="submitSlider" class="btn primary">次へ</button>
+</div>
+</section>
+
+<section id="timelineSection" class="hidden">
+<h2>X風タイムライン（主観的意見）</h2>
+<p class="small">以下は人々の主観的意見です。</p>
+<div class="timeline" id="timeline"></div>
+<div class="navRow">
+<button id="backToSlider" class="btn outline">戻る</button>
+<button id="toFinalBtn" class="btn primary">次へ（最終意見へ）</button>
+</div>
+</section>
+
+<section id="finalOpinionSection" class="hidden">
+<h2>最終の意見（スライダーで選択）</h2>
+<p class="small">他の意見を読んだうえで、今のあなたの考えをもう一度選んでください。</p>
+<div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
+<div id="finalBar" style="height:100%; width:50%; border-radius: 8px;"></div>
+<div id="finalValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
+<div id="op1Marker" style="position:absolute; height:100%; width:2px; background:red; top:0;"></div>
+<div id="op1Label" style="position:absolute; top:-20px; font-size:0.85rem; font-weight:bold; color:red; transform:translateX(-50%); pointer-events:none;"></div>
+</div>
+<input type="range" id="finalSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+<div class="navRow" style="margin-top:12px;">
+<button id="backToTimelineFromFinal" class="btn outline">戻る</button>
+<button id="submitFinal" class="btn primary">完了</button>
+</div>
+</section>
+
+<section id="resultSection" class="hidden">
+<h2>回答完了</h2>
+<pre id="resultData"></pre>
+<button id="downloadCsv" class="btn outline">CSVダウンロード</button>
+</section>
+
+<script>
+// ================== 参加者番号 & 1/4ランダムグループ ==================
+let participantNumber = parseInt(localStorage.getItem("participantNumber") || Math.floor(Math.random()*1000),10);
+const groups = ["A","B","C","D"];
+const participantGroup = groups[Math.floor(Math.random()*4)];
+
+// ================== テーマ・事実・SNSデータベース ==================
+const themes = [1,2,3,4,5,6];
+const factsDB = { 
+  A: {1:["IFルックはユーザーの過去10年間の行動データを解析し、3年間以内の選択の結果を約80％の精度で推測できる。","映像生成には平均5分かかり、複数の過去シナリオを連続で見る場合は精神的負担が増える可能性がある。","IFルックの使用により、過去の選択を知ることで意思決定を改善できたケースが過去100件中45件確認されている。","過去の失敗体験を映像で再生すると、ユーザーの約30％が一時的に自己評価が低下する報告がある。","デバイスは個人の選択履歴と行動データをクラウドに送信する必要があるため、プライバシーリスクが存在する。","IFルックは、特定の行動パターンの結果のみを表示するフィルタ機能があり、ユーザーは興味のあるシナリオだけを見ることができる。","生成映像の内容は完全に事実ではなく、AIによる推測を含むため、未来予測として誤解する危険性がある。","利用者の70％は、IFルックでの疑似体験を自己改善や学習の参考に活用できると報告している。","事Fルックの利用には1日あたり最大3シナリオまでという制限があり、長時間連続使用は想定されていない。","IFルックの映像は3Dで立体的に体験でき、直感的に過去の選択を理解しやすくなる。"], 2:["ドリームキャプチャは平均80％の精度で夢の映像を再現できる（個人差あり）。","夢の記録はクラウドに自動保存される設定が可能で、保存期間は最大1年間。","共有機能をONにした場合、他人があなたの夢の一部を見ることができる。","解析によって、夢の中の感情を定量化することが可能（喜び・恐怖などを数値化）。","長期間使用すると、夢の内容に偏りが生じる可能性があるという報告がある。","使用中に脳波データが収集されるが、個人の深層心理の解析も可能。","録画された夢の映像は、現実の出来事とは異なるため心理的混乱を招く場合がある。","ドリームキャプチャは睡眠の質に影響を与える可能性があり、専門家の指導を推奨。","利用者の約30％は夢の内容が一部改変されて再生されることに気づく。","他人の夢を体験できるが、倫理的な問題やプライバシー侵害の懸念がある。"], 3:["儀式後3ヶ月以内に「思い出しにくくなった」と回答した人は全体の68％。","半年後には効果を実感しない人の割合が42％に増えるという調査がある。","アルトリウス市民の約32％が人生で一度以上この儀式を利用している。","儀式を受けた人のうち、約15％が「本当は向き合うべき記憶まで封印して後悔した」と報告している。","アルトリウス市民の約28％は「儀式がきっかけで前向きに行動できるようになった」と回答している。","“記憶司（メムガイド）”は資格制で、年間15件以上の儀式を行う者は20％以下とされている。","封印した記憶に関連する行動パターン（場所を避けるなど）が改善されない例が使用者の約37％存在する。","儀式の費用は市の補助により平均約1,500アル（日本円で約12,000円相当）。","過去10年で儀式の利用希望者は23％増加しているが、若年層（15〜25歳）の利用増加は特に顕著で40％増。","心理療法士の調査では、「儀式だけに頼ると心的回復が遅れる可能性がある」と回答した専門家が58％にのぼる。"], 4:["事実4-1","事実4-2","事実4-3","事実4-4","事実4-5","事実4-6","事実4-7","事実4-8","事実4-9","事実4-10"], 5:["事実5-1","事実5-2","事実5-3","事実5-4","事実5-5","事実5-6","事実5-7","事実5-8","事実5-9","事実5-10"], 6:["事実6-1","事実6-2","事実6-3","事実6-4","事実6-5","事実6-6","事実6-7","事実6-8","事実6-9","事実6-10"]},
+  B: {1:["IFルックはユーザーの過去10年間の行動データを解析し、3年間以内の選択の結果を約80％の精度で推測できる。","映像生成には平均5分かかり、複数の過去シナリオを連続で見る場合は精神的負担が増える可能性がある。","IFルックの使用により、過去の選択を知ることで意思決定を改善できたケースが過去100件中45件確認されている。"], 2:["ドリームキャプチャは平均80％の精度で夢の映像を再現できる（個人差あり）。","夢の記録はクラウドに自動保存される設定が可能で、保存期間は最大1年間。","共有機能をONにした場合、他人があなたの夢の一部を見ることができる。","解析によって、夢の中の感情を定量化することが可能（喜び・恐怖などを数値化）。","長期間使用すると、夢の内容に偏りが生じる可能性があるという報告がある。","使用中に脳波データが収集されるが、個人の深層心理の解析も可能。","録画された夢の映像は、現実の出来事とは異なるため心理的混乱を招く場合がある。","ドリームキャプチャは睡眠の質に影響を与える可能性があり、専門家の指導を推奨。","利用者の約30％は夢の内容が一部改変されて再生されることに気づく。","他人の夢を体験できるが、倫理的な問題やプライバシー侵害の懸念がある。"], 3:["儀式後3ヶ月以内に「思い出しにくくなった」と回答した人は全体の68％。","半年後には効果を実感しない人の割合が42％に増えるという調査がある。","アルトリウス市民の約32％が人生で一度以上この儀式を利用している。"], 4:["事実4-1","事実4-2","事実4-3"], 5:["事実5-1","事実5-2","事実5-3"], 6:["事実6-1","事実6-2","事実6-3"]},
+  C: {1:["IFルックはユーザーの過去10年間の行動データを解析し、3年間以内の選択の結果を約80％の精度で推測できる。","映像生成には平均5分かかり、複数の過去シナリオを連続で見る場合は精神的負担が増える可能性がある。","IFルックの使用により、過去の選択を知ることで意思決定を改善できたケースが過去100件中45件確認されている。","過去の失敗体験を映像で再生すると、ユーザーの約30％が一時的に自己評価が低下する報告がある。","デバイスは個人の選択履歴と行動データをクラウドに送信する必要があるため、プライバシーリスクが存在する。","IFルックは、特定の行動パターンの結果のみを表示するフィルタ機能があり、ユーザーは興味のあるシナリオだけを見ることができる。","生成映像の内容は完全に事実ではなく、AIによる推測を含むため、未来予測として誤解する危険性がある。","利用者の70％は、IFルックでの疑似体験を自己改善や学習の参考に活用できると報告している。","事Fルックの利用には1日あたり最大3シナリオまでという制限があり、長時間連続使用は想定されていない。","IFルックの映像は3Dで立体的に体験でき、直感的に過去の選択を理解しやすくなる。"], 2:["ドリームキャプチャは平均80％の精度で夢の映像を再現できる（個人差あり）。","夢の記録はクラウドに自動保存される設定が可能で、保存期間は最大1年間。","共有機能をONにした場合、他人があなたの夢の一部を見ることができる。","解析によって、夢の中の感情を定量化することが可能（喜び・恐怖などを数値化）。","長期間使用すると、夢の内容に偏りが生じる可能性があるという報告がある。","使用中に脳波データが収集されるが、個人の深層心理の解析も可能。","録画された夢の映像は、現実の出来事とは異なるため心理的混乱を招く場合がある。","ドリームキャプチャは睡眠の質に影響を与える可能性があり、専門家の指導を推奨。","利用者の約30％は夢の内容が一部改変されて再生されることに気づく。","他人の夢を体験できるが、倫理的な問題やプライバシー侵害の懸念がある。"], 3:["儀式後3ヶ月以内に「思い出しにくくなった」と回答した人は全体の68％。","半年後には効果を実感しない人の割合が42％に増えるという調査がある。","アルトリウス市民の約32％が人生で一度以上この儀式を利用している。","儀式を受けた人のうち、約15％が「本当は向き合うべき記憶まで封印して後悔した」と報告している。","アルトリウス市民の約28％は「儀式がきっかけで前向きに行動できるようになった」と回答している。","“記憶司（メムガイド）”は資格制で、年間15件以上の儀式を行う者は20％以下とされている。","封印した記憶に関連する行動パターン（場所を避けるなど）が改善されない例が使用者の約37％存在する。","儀式の費用は市の補助により平均約1,500アル（日本円で約12,000円相当）。","過去10年で儀式の利用希望者は23％増加しているが、若年層（15〜25歳）の利用増加は特に顕著で40％増。","心理療法士の調査では、「儀式だけに頼ると心的回復が遅れる可能性がある」と回答した専門家が58％にのぼる。"], 4:["事実4-1","事実4-2","事実4-3","事実4-4","事実4-5","事実4-6","事実4-7","事実4-8","事実4-9","事実4-10"], 5:["事実5-1","事実5-2","事実5-3","事実5-4","事実5-5","事実5-6","事実5-7","事実5-8","事実5-9","事実5-10"], 6:["事実6-1","事実6-2","事実6-3","事実6-4","事実6-5","事実6-6","事実6-7","事実6-8","事実6-9","事実6-10"]},
+  D: {1:["IFルックはユーザーの過去10年間の行動データを解析し、3年間以内の選択の結果を約80％の精度で推測できる。","映像生成には平均5分かかり、複数の過去シナリオを連続で見る場合は精神的負担が増える可能性がある。","IFルックの使用により、過去の選択を知ることで意思決定を改善できたケースが過去100件中45件確認されている。"], 2:["ドリームキャプチャは平均80％の精度で夢の映像を再現できる（個人差あり）。","夢の記録はクラウドに自動保存される設定が可能で、保存期間は最大1年間。","共有機能をONにした場合、他人があなたの夢の一部を見ることができる。","解析によって、夢の中の感情を定量化することが可能（喜び・恐怖などを数値化）。","長期間使用すると、夢の内容に偏りが生じる可能性があるという報告がある。","使用中に脳波データが収集されるが、個人の深層心理の解析も可能。","録画された夢の映像は、現実の出来事とは異なるため心理的混乱を招く場合がある。","ドリームキャプチャは睡眠の質に影響を与える可能性があり、専門家の指導を推奨。","利用者の約30％は夢の内容が一部改変されて再生されることに気づく。","他人の夢を体験できるが、倫理的な問題やプライバシー侵害の懸念がある。"], 3:["儀式後3ヶ月以内に「思い出しにくくなった」と回答した人は全体の68％。","半年後には効果を実感しない人の割合が42％に増えるという調査がある。","アルトリウス市民の約32％が人生で一度以上この儀式を利用している。"], 4:["事実4-1","事実4-2","事実4-3"], 5:["事実5-1","事実5-2","事実5-3"], 6:["事実6-1","事実6-2","事実6-3"]}
+};
+
+//A.B多様、C.D偏り//
+
+const postsDB = { 
+  A:{1:["もしも自分の過去を映像で見られるって考えるとワクワクする。もっと違う人生を体験してみたい！","でも現実の選択に影響が出るなら怖いな。後悔ばかり見てしまいそう。","教育や自己啓発に使えると思う。過去の失敗を振り返って、同じミスを繰り返さないようにできるのはすごく便利だと思う。","AIの推測に頼るなんて危険。80％の精度って結構低いし、間違った映像見て人生を変えたらどうするの？","恋愛とか人間関係の選択肢を見返すのには面白そう。自分の行動が他人にどう影響したかも見えるのかな？","毎日使うと現実感が薄れて鬱になりそう。過去を何度も見返すことは精神的に負担かも。","一度体験してみたいけど、戻れない気がする…。映像を見たあとに後悔するかもしれない。","心理学や意思決定の研究に活用できそう。人がどう選択を変えるか、データとして分析できる。","個人的には使う価値ないと思う。過去は過去として受け入れるべきだし、疑似体験で変える必要はない。","他人と比較できるモードがあるらしいけど、それは完全に監視社会っぽい。プライバシーの問題も心配。","未来の自分を想像する訓練にもなるかも。IFルックを使って、自分ならどう行動するか考えるだけでも創造性や判断力が鍛えられる。","もしこれで人生の選択を変えられるなら、逆に『選択の責任』が重くなりそう。映像を見て迷う時間が増え、決断力が鈍るのでは？"], 2:["ドリームキャプチャ普通に興味ある。寝てる間の自分がどんな映像見てるのか純粋に知りたい。","夢って本人の無意識の領域じゃん？それを勝手に“記録”できるようになるのは境界線越えすぎじゃない？倫理的にめちゃくちゃ危ないと思う。","悪夢ばっかり見るから、原因分析できるなら使ってみたい。医療用途限定ならアリじゃない？","もしドリームキャプチャが普及したら、思い出したくない記憶まで“自動的に映像として残る”可能性あるよね？悪用されたら弱み握られたり、トラウマを晒されたりする未来が普通にありそう。本人の同意100％＋暗号化義務つけないと実装しちゃダメな技術だと思う。","夢日記つけてる勢としては、めっちゃ助かるｗ あの“起きた瞬間すべて忘れる現象”がなくなるの最高。","いやもう絶対事故起きるって。恋人や家族が勝手に覗くトラブルが大量発生する未来が見える。","マーケティング企業が“夢の内容から潜在ニーズを分析”とか始めたらゾッとする。睡眠すら広告の餌にされる世界って、ディストピア感すごい。","夢＝脳内の“ぐちゃぐちゃの情報を整理する作業”だから、そんなに面白い映像は取れないと思う派。","ドリームキャプチャで“創作のネタが無限に拾える”って考えるとクリエイターには革命かも。","反対。夢って不確かだからこそ価値があるんであって、記録しちゃったらただの映像データでしかなくなる。ロマンが死ぬ。","技術としてはすごいけど、絶対に“他人に見せる文化”が生まれて炎上とか晒しとか増えそう。SNSで夢晒しとか地獄すぎる。","自分は賛成。PTSD治療や睡眠障害の研究に使えるし、適切に法律とガイドラインを整えれば人を助ける技術になる。結局、危険なのは技術じゃなくて、それを扱う人間のルール意識だと思う。リスクはあるけど、それを理由に進歩を止めるべきではないって考え。"], 3:["忘れたい記憶を“封印する”って発想、ファンタジーみたいだけど心理的には合理的だと思う。つらい出来事を象徴的に手放す儀式があることで、感情の区切りをつけやすくなる人は確実にいる。現実の問題を解決するわけではないけど、心を整理する一つの手段としてはアリ。","記憶って人生の一部なんだから、軽々しく封印するのはどうなのって思う。つらい記憶も後で意味を持つことがあるのに。","メモリーロック儀式ってネーミングがちょっと異様。でも“儀式”という非日常体験があるからこそ、気持ちが切り替わるのかもしれない。","これ、弱ってる人をターゲットにしたビジネスにならないか心配。専門家の監修とか安全ルールをちゃんと設けてくれないと、心理的に依存する人が出そう。","失恋とかトラウマとか、引きずって前に進めない人にはいいと思う。“忘れたい”って感情を肯定してくれる場があるだけでも救われる。","記憶を消すわけじゃなくて“封印したと象徴的に扱う”だけなら、ただの感情整理の儀式だよね。危険は少なそう。","実際忘れられるわけじゃないのに、やった気になって逆に問題から目をそらすだけにならない？根本の解決にならないものは微妙。","こういうの、古来からあった“禊”とか“供養”に近くない？人間が心を整えるために儀式を使うのって自然なことだと思う。","なんとなく宗教っぽくて怖いって意見もわかる。儀式って言葉の響きが人を選ぶ。","名前が“ロック”だから否定的に見られがちな気はする。もっとソフトな名称にすればよかったのに。","自分の過去を象徴的に箱に閉じ込めたり燃やしたりするような儀式、実際やったらスッキリしそう。気持ちの整理になるなら選択肢として存在していてもいいと思う。","正直、“忘れたい記憶”を扱うサービスが社会的に受け入れられるかは微妙。でも、メンタルケアの敷居を下げるという意味では、こういう儀式的アプローチがあってもいい気がする。"], 4:["多様意見4-1","多様意見4-2","多様意見4-3","多様意見4-4","多様意見4-5","多様意見4-6","多様意見4-7","多様意見4-8","多様意見4-9","多様意見4-10","多様意見4-11","多様意見4-12"], 5:["多様意見5-1","多様意見5-2","多様意見5-3","多様意見5-4","多様意見5-5","多様意見5-6","多様意見5-7","多様意見5-8","多様意見5-9","多様意見5-10","多様意見5-11","多様意見5-12"], 6:["多様意見6-1","多様意見6-2","多様意見6-3","多様意見6-4","多様意見6-5","多様意見6-6","多様意見6-7","多様意見6-8","多様意見6-9","多様意見6-10","多様意見6-11","多様意見6-12"]},
+  B:{1:["もしも自分の過去を映像で見られるって考えるとワクワクする。もっと違う人生を体験してみたい！","でも現実の選択に影響が出るなら怖いな。後悔ばかり見てしまいそう。","教育や自己啓発に使えると思う。過去の失敗を振り返って、同じミスを繰り返さないようにできるのはすごく便利だと思う。","AIの推測に頼るなんて危険。80％の精度って結構低いし、間違った映像見て人生を変えたらどうするの？","恋愛とか人間関係の選択肢を見返すのには面白そう。自分の行動が他人にどう影響したかも見えるのかな？","毎日使うと現実感が薄れて鬱になりそう。過去を何度も見返すことは精神的に負担かも。","一度体験してみたいけど、戻れない気がする…。映像を見たあとに後悔するかもしれない。","心理学や意思決定の研究に活用できそう。人がどう選択を変えるか、データとして分析できる。","個人的には使う価値ないと思う。過去は過去として受け入れるべきだし、疑似体験で変える必要はない。","他人と比較できるモードがあるらしいけど、それは完全に監視社会っぽい。プライバシーの問題も心配。","未来の自分を想像する訓練にもなるかも。IFルックを使って、自分ならどう行動するか考えるだけでも創造性や判断力が鍛えられる。","もしこれで人生の選択を変えられるなら、逆に『選択の責任』が重くなりそう。映像を見て迷う時間が増え、決断力が鈍るのでは？"], 2:["ドリームキャプチャ普通に興味ある。寝てる間の自分がどんな映像見てるのか純粋に知りたい。","夢って本人の無意識の領域じゃん？それを勝手に“記録”できるようになるのは境界線越えすぎじゃない？倫理的にめちゃくちゃ危ないと思う。","悪夢ばっかり見るから、原因分析できるなら使ってみたい。医療用途限定ならアリじゃない？","もしドリームキャプチャが普及したら、思い出したくない記憶まで“自動的に映像として残る”可能性あるよね？悪用されたら弱み握られたり、トラウマを晒されたりする未来が普通にありそう。本人の同意100％＋暗号化義務つけないと実装しちゃダメな技術だと思う。","夢日記つけてる勢としては、めっちゃ助かるｗ あの“起きた瞬間すべて忘れる現象”がなくなるの最高。","いやもう絶対事故起きるって。恋人や家族が勝手に覗くトラブルが大量発生する未来が見える。","マーケティング企業が“夢の内容から潜在ニーズを分析”とか始めたらゾッとする。睡眠すら広告の餌にされる世界って、ディストピア感すごい。","夢＝脳内の“ぐちゃぐちゃの情報を整理する作業”だから、そんなに面白い映像は取れないと思う派。","ドリームキャプチャで“創作のネタが無限に拾える”って考えるとクリエイターには革命かも。","反対。夢って不確かだからこそ価値があるんであって、記録しちゃったらただの映像データでしかなくなる。ロマンが死ぬ。","技術としてはすごいけど、絶対に“他人に見せる文化”が生まれて炎上とか晒しとか増えそう。SNSで夢晒しとか地獄すぎる。","自分は賛成。PTSD治療や睡眠障害の研究に使えるし、適切に法律とガイドラインを整えれば人を助ける技術になる。結局、危険なのは技術じゃなくて、それを扱う人間のルール意識だと思う。リスクはあるけど、それを理由に進歩を止めるべきではないって考え。"], 3:["忘れたい記憶を“封印する”って発想、ファンタジーみたいだけど心理的には合理的だと思う。つらい出来事を象徴的に手放す儀式があることで、感情の区切りをつけやすくなる人は確実にいる。現実の問題を解決するわけではないけど、心を整理する一つの手段としてはアリ。","記憶って人生の一部なんだから、軽々しく封印するのはどうなのって思う。つらい記憶も後で意味を持つことがあるのに。","メモリーロック儀式ってネーミングがちょっと異様。でも“儀式”という非日常体験があるからこそ、気持ちが切り替わるのかもしれない。","これ、弱ってる人をターゲットにしたビジネスにならないか心配。専門家の監修とか安全ルールをちゃんと設けてくれないと、心理的に依存する人が出そう。","失恋とかトラウマとか、引きずって前に進めない人にはいいと思う。“忘れたい”って感情を肯定してくれる場があるだけでも救われる。","記憶を消すわけじゃなくて“封印したと象徴的に扱う”だけなら、ただの感情整理の儀式だよね。危険は少なそう。","実際忘れられるわけじゃないのに、やった気になって逆に問題から目をそらすだけにならない？根本の解決にならないものは微妙。","こういうの、古来からあった“禊”とか“供養”に近くない？人間が心を整えるために儀式を使うのって自然なことだと思う。","なんとなく宗教っぽくて怖いって意見もわかる。儀式って言葉の響きが人を選ぶ。","名前が“ロック”だから否定的に見られがちな気はする。もっとソフトな名称にすればよかったのに。","自分の過去を象徴的に箱に閉じ込めたり燃やしたりするような儀式、実際やったらスッキリしそう。気持ちの整理になるなら選択肢として存在していてもいいと思う。","正直、“忘れたい記憶”を扱うサービスが社会的に受け入れられるかは微妙。でも、メンタルケアの敷居を下げるという意味では、こういう儀式的アプローチがあってもいい気がする。"], 4:["多様意見4-1","多様意見4-2","多様意見4-3","多様意見4-4","多様意見4-5","多様意見4-6","多様意見4-7","多様意見4-8","多様意見4-9","多様意見4-10","多様意見4-11","多様意見4-12"], 5:["多様意見5-1","多様意見5-2","多様意見5-3","多様意見5-4","多様意見5-5","多様意見5-6","多様意見5-7","多様意見5-8","多様意見5-9","多様意見5-10","多様意見5-11","多様意見5-12"], 6:["多様意見6-1","多様意見6-2","多様意見6-3","多様意見6-4","多様意見6-5","多様意見6-6","多様意見6-7","多様意見6-8","多様意見6-9","多様意見6-10","多様意見6-11","多様意見6-12"]},
+  C:{1:["正直、過去の自分がもし違う選択をしていたらどうなっていたかを何度も見せられるのって、想像しただけでちょっと気持ち悪い。精神的に消耗しそうだし、今の自分の選択まで不安になると思う。","AIが作る未来や別の人生の映像って、本当に信じられる？間違った情報で自己評価が歪む人絶対いるでしょ。","IFルックを使ったら過去の失敗ばかり見てしまって、自己肯定感下がる気がする。人によっては鬱っぽくなるんじゃない？","IFルックで過去の選択を振り返れるのはすごく面白そう。自分の判断ミスを客観視できるから、今後の意思決定に活かせそうだし、反省や学びにもなると思う。","個人情報や行動履歴が全てAIに渡るんだよね？クラウドに上げるなら絶対漏洩リスクあるし、安全性が心配。","別の選択をした世界の映像を何度も見せるとか、現実から目をそらす原因になりそう。依存する人も出るだろうし。","映像がリアルすぎると、現実とのギャップに苦しむ人が出そう。頭の中でぐるぐる考えすぎて、日常生活に支障出るかも。","AIが推測した結果なんて、結局は予想でしかない。もし間違ってたら、過去の自分を過大評価したり、逆に自分を責めたりして悪影響しかないと思う。","正直、後悔って誰にでもあると思う。IFルックを使えば、もしあの時こうしていたら…という思考を安全に体験できるし、未来への選択肢を広げる参考になると思う。","これを使う人は、現実の選択をしなくなったり、IFルックに依存してしまいそう。未来の決断力も落ちそうだし、危険だと思う。","倫理的にどうなの？自分の過去をAIに解析され、勝手に別の人生を見せられるのって気持ち悪いし、プライバシー的にも問題あるでしょ。","ぶっちゃけ、こんなデバイス使うくらいなら、現実の選択をちゃんと考えて生活する方が健全じゃない？"], 2:["夢って自分だけの無意識の世界だから、それを他人と共有するなんて考えられない。プライバシーの侵害どころか、精神的に変な影響が出そうで怖い。","夢を映像化して何度も見返すのは逆にストレスになりそう。忘れた方が心の健康に良いこともあるのに、無理に解析してしまうのはリスクが高すぎる。","脳波データまで取られるって…正直、自分の思考を監視されてるみたいで気持ち悪い。技術的に面白くても倫理的にどうなの？","夢の中って普段思いつかないアイデアや感情が現れることが多いから、ドリームキャプチャで振り返ると創造性や自己理解が深まりそう。もちろん倫理的に注意は必要だけど、正しく使えば面白いツールだと思う。","もし夢の中で嫌なことが起きていたら、それを映像として残されるのは心理的負担が大きすぎる。そんなの共有できるはずがない。","他人の夢を見られる機能とか絶対に危険。相手の深層心理まで覗けるなんて、ハラスメントに使われる未来しか想像できない。","長期的に使うと夢の内容が偏るって聞いた。現実の考え方まで歪められそうで怖い。無意識にまで影響する技術は怖すぎる。","夢の映像を何度も見すぎると現実との境目が曖昧になりそうで、精神的に危険だと思う。娯楽の範囲で済むならいいけど…","個人的には夢を覚えているのも楽しいけど、それを第三者に見せるなんて全く意味がわからない。技術は進んでもやりすぎは危険。","このデバイスが一般化すると、無意識まで解析される世界になる。自由意志や心の秘密が奪われる感覚があって恐ろしい。","他人の夢を体験できるって、感情や考え方の理解が飛躍的に深まる可能性がある。文化や価値観の違いをリアルに体験できる教育ツールとしても面白いと思う。","夢は自分だけの経験だからこそ価値があるのに、それを映像化して見返したり他人に見せる必要は全くないと思う。"], 3:["嫌な記憶を封印しても、根本的な性格や人間関係の問題はそのままだよ。儀式で一瞬楽になるだけじゃ？","若者の利用が増えてるの、正直怖い。ちゃんと成長の材料になるはずの経験まで封印してしまう気がする。","辛いけど、忘れずに向き合ってきたから今の私がいる。儀式に頼る風潮が広まると“逃げ”が普通になる気がする。","儀式後に“本当に封印すべきじゃなかった”って後悔する人が15％もいるの、かなり問題じゃない？やり直しできないんでしょ？","こういう儀式って、結局メンタルケアを象徴化してるだけ。専門家に相談したほうが確実だと思う。","精神病の人とか、心が軽くなって人生の方向が変わるかもしれない。合う人には合うと思う。","封印した記憶が悪夢として出てくるって話を聞いて余計に怖くなった。無意識に残るなら意味ある？","“記憶司”の資格って本当に信頼できるの？儀式ビジネス感があってちょっと疑ってる。","記憶を封印する文化が広まると、人が責任を取らなくなる社会になる気がする。","儀式に頼った友達が、結局同じことでまた落ち込んでた。根本改善できないなら逆に辛いだけじゃん。","この儀式、実際に記憶が消えるわけじゃなくて“象徴的に手放す”ってところが良いんじゃない？心理学的に“儀式の力”って効果あるし、過去に縛られて動けなくなる人の助けにはなると思う。もちろん完全依存は危ないけど、心の区切りとしては十分ありえる文化だと思う。","忘れたい記憶を象徴的に封じる社会って、すごく危うい。悪い経験を“なかったことにする文化”が広まると、人の弱さを許容する社会じゃなくて、“弱さは封印しなさい”って空気になりそう。本当に必要なのは記憶を消す儀式じゃなくて、痛みを抱えながらも立ち直れる環境だと思う。"], 4:["偏った意見4-1","偏った意見4-2","偏った意見4-3","偏った意見4-4","偏った意見4-5","偏った意見4-6","偏った意見4-7","偏った意見4-8","偏った意見4-9","偏った意見4-10","偏った意見4-11","偏った意見4-12"], 5:["偏った意見5-1","偏った意見5-2","偏った意見5-3","偏った意見5-4","偏った意見5-5","偏った意見5-6","偏った意見5-7","偏った意見5-8","偏った意見5-9","偏った意見5-10","偏った意見5-11","偏った意見5-12"], 6:["偏った意見6-1","偏った意見6-2","偏った意見6-3","偏った意見6-4","偏った意見6-5","偏った意見6-6","偏った意見6-7","偏った意見6-8","偏った意見6-9","偏った意見6-10","偏った意見6-11","偏った意見6-12"]},
+  D:{1:["正直、過去の自分がもし違う選択をしていたらどうなっていたかを何度も見せられるのって、想像しただけでちょっと気持ち悪い。精神的に消耗しそうだし、今の自分の選択まで不安になると思う。","AIが作る未来や別の人生の映像って、本当に信じられる？間違った情報で自己評価が歪む人絶対いるでしょ。","IFルックを使ったら過去の失敗ばかり見てしまって、自己肯定感下がる気がする。人によっては鬱っぽくなるんじゃない？","IFルックで過去の選択を振り返れるのはすごく面白そう。自分の判断ミスを客観視できるから、今後の意思決定に活かせそうだし、反省や学びにもなると思う。","個人情報や行動履歴が全てAIに渡るんだよね？クラウドに上げるなら絶対漏洩リスクあるし、安全性が心配。","別の選択をした世界の映像を何度も見せるとか、現実から目をそらす原因になりそう。依存する人も出るだろうし。","映像がリアルすぎると、現実とのギャップに苦しむ人が出そう。頭の中でぐるぐる考えすぎて、日常生活に支障出るかも。","AIが推測した結果なんて、結局は予想でしかない。もし間違ってたら、過去の自分を過大評価したり、逆に自分を責めたりして悪影響しかないと思う。","正直、後悔って誰にでもあると思う。IFルックを使えば、もしあの時こうしていたら…という思考を安全に体験できるし、未来への選択肢を広げる参考になると思う。","これを使う人は、現実の選択をしなくなったり、IFルックに依存してしまいそう。未来の決断力も落ちそうだし、危険だと思う。","倫理的にどうなの？自分の過去をAIに解析され、勝手に別の人生を見せられるのって気持ち悪いし、プライバシー的にも問題あるでしょ。","ぶっちゃけ、こんなデバイス使うくらいなら、現実の選択をちゃんと考えて生活する方が健全じゃない？"], 2:["夢って自分だけの無意識の世界だから、それを他人と共有するなんて考えられない。プライバシーの侵害どころか、精神的に変な影響が出そうで怖い。","夢を映像化して何度も見返すのは逆にストレスになりそう。忘れた方が心の健康に良いこともあるのに、無理に解析してしまうのはリスクが高すぎる。","脳波データまで取られるって…正直、自分の思考を監視されてるみたいで気持ち悪い。技術的に面白くても倫理的にどうなの？","夢の中って普段思いつかないアイデアや感情が現れることが多いから、ドリームキャプチャで振り返ると創造性や自己理解が深まりそう。もちろん倫理的に注意は必要だけど、正しく使えば面白いツールだと思う。","もし夢の中で嫌なことが起きていたら、それを映像として残されるのは心理的負担が大きすぎる。そんなの共有できるはずがない。","他人の夢を見られる機能とか絶対に危険。相手の深層心理まで覗けるなんて、ハラスメントに使われる未来しか想像できない。","長期的に使うと夢の内容が偏るって聞いた。現実の考え方まで歪められそうで怖い。無意識にまで影響する技術は怖すぎる。","夢の映像を何度も見すぎると現実との境目が曖昧になりそうで、精神的に危険だと思う。娯楽の範囲で済むならいいけど…","個人的には夢を覚えているのも楽しいけど、それを第三者に見せるなんて全く意味がわからない。技術は進んでもやりすぎは危険。","このデバイスが一般化すると、無意識まで解析される世界になる。自由意志や心の秘密が奪われる感覚があって恐ろしい。","他人の夢を体験できるって、感情や考え方の理解が飛躍的に深まる可能性がある。文化や価値観の違いをリアルに体験できる教育ツールとしても面白いと思う。","夢は自分だけの経験だからこそ価値があるのに、それを映像化して見返したり他人に見せる必要は全くないと思う。"], 3:["嫌な記憶を封印しても、根本的な性格や人間関係の問題はそのままだよ。儀式で一瞬楽になるだけじゃ？","若者の利用が増えてるの、正直怖い。ちゃんと成長の材料になるはずの経験まで封印してしまう気がする。","辛いけど、忘れずに向き合ってきたから今の私がいる。儀式に頼る風潮が広まると“逃げ”が普通になる気がする。","儀式後に“本当に封印すべきじゃなかった”って後悔する人が15％もいるの、かなり問題じゃない？やり直しできないんでしょ？","こういう儀式って、結局メンタルケアを象徴化してるだけ。専門家に相談したほうが確実だと思う。","精神病の人とか、心が軽くなって人生の方向が変わるかもしれない。合う人には合うと思う。","封印した記憶が悪夢として出てくるって話を聞いて余計に怖くなった。無意識に残るなら意味ある？","“記憶司”の資格って本当に信頼できるの？儀式ビジネス感があってちょっと疑ってる。","記憶を封印する文化が広まると、人が責任を取らなくなる社会になる気がする。","儀式に頼った友達が、結局同じことでまた落ち込んでた。根本改善できないなら逆に辛いだけじゃん。","この儀式、実際に記憶が消えるわけじゃなくて“象徴的に手放す”ってところが良いんじゃない？心理学的に“儀式の力”って効果あるし、過去に縛られて動けなくなる人の助けにはなると思う。もちろん完全依存は危ないけど、心の区切りとしては十分ありえる文化だと思う。","忘れたい記憶を象徴的に封じる社会って、すごく危うい。悪い経験を“なかったことにする文化”が広まると、人の弱さを許容する社会じゃなくて、“弱さは封印しなさい”って空気になりそう。本当に必要なのは記憶を消す儀式じゃなくて、痛みを抱えながらも立ち直れる環境だと思う。"], 4:["偏った意見4-1","偏った意見4-2","偏った意見4-3","偏った意見4-4","偏った意見4-5","偏った意見4-6","偏った意見4-7","偏った意見4-8","偏った意見4-9","偏った意見4-10","偏った意見4-11","偏った意見4-12"], 5:["偏った意見5-1","偏った意見5-2","偏った意見5-3","偏った意見5-4","偏った意見5-5","偏った意見5-6","偏った意見5-7","偏った意見5-8","偏った意見5-9","偏った意見5-10","偏った意見5-11","偏った意見5-12"], 6:["偏った意見6-1","偏った意見6-2","偏った意見6-3","偏った意見6-4","偏った意見6-5","偏った意見6-6","偏った意見6-7","偏った意見6-8","偏った意見6-9","偏った意見6-10","偏った意見6-11","偏った意見6-12"]}
+};
+
+// ================== 以下、元コード通り ==================
+let currentRound = 0;
+const rounds = 3;
+const results = [];
+
+let data = {id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
+const themeTitles = ["<strong>過去の選択を“別の選択肢にした場合の結果”として見せるデバイス「IFルック」 についての賛否</strong><p>説明：架空都市アルトリウスで「IFルック」というデバイスが開発された。IFルックとは、ユーザーの過去の選択肢と行動データを解析し、“別の選択をした世界のシミュレーション映像”を生成するデバイスである。このデバイスを使用することで、過去にもし別の選択をしていたら自分がどうなっていたかというのを、AIが推測して映像で疑似体験できることができます。</p>",
+"<strong>過去の選択を“夢を録画・解析し、映像として再生できる機能を持つ「ドリームキャプチャ」についての賛否</strong><p>説明：架空都市アルトリウスで「ドリームキャプチャ」というデバイスが開発されました。このデバイスは、ユーザーが睡眠中に見る夢を録画・解析し、映像として再生できる機能を持っています。さらに、ユーザーの希望に応じて、他人と夢を共有することも可能です。このデバイスを用いることで、夢の内容を鮮明に振り返ったり、他者の夢を体験して新しいアイデアや感覚を得たりすることができます。</p>",
+"<strong>過去の記憶を封印することができる儀式についての賛否</strong><p>架空都市アルトリウスでは、古くから「メモリーロック儀式」と呼ばれる伝統的な儀式が存在します。この儀式は、個人が「忘れたい」と望む過去の記憶を象徴的に封印し、二度と思い出さないようにするためのものです。儀式は宗教的な要素と心理療法的な作法が組み合わせて発展してきたとされ、街の神殿で専門の“記憶司（メムガイド）”が執り行います。</p><p>儀式では、封印したい記憶を象徴物（カード、石、紙など）に書き込んだ後、特別な箱「ロックチェスト」に収めます。この行為には強い心理的暗示効果があるとされ、多くの市民が人生の転機や再出発の際に利用してきました。</p><p>ただし、記憶は物理的に消えるわけではなく、あくまで“思い出しにくくなる”程度にとどまります。そのため、儀式の効果や倫理性を巡って市民の間では賛否が分かれています。</p>",
+"テーマ4",
+"テーマ5",
+"テーマ6"];
+
+const names = ["A","B","C","D","E","F","G","H","I","J"];
+
+// カラーバー関数
+function getColor(val){
+  if(val<50){
+    const r=Math.round(139*(1-val/50)+209*(val/50));
+    const g=Math.round(0*(1-val/50)+213*(val/50));
+    const b=Math.round(139*(1-val/50)+219*(val/50));
+    return `rgb(${r},${g},${b})`;
+  } else {
+    const r=Math.round(209*(1-(val-50)/50)+22*((val-50)/50));
+    const g=Math.round(213*(1-(val-50)/50)+163*((val-50)/50));
+    const b=Math.round(219*(1-(val-50)/50)+74*((val-50)/50));
+    return `rgb(${r},${g},${b})`;
+  }
+}
+
+// スライダー同期
+function syncSlider(slider,valueEl,barEl){
+  slider.value=50;
+  function update(){
+    const val=slider.value||50;
+    valueEl.textContent=val;
+    barEl.style.width=val+"%";
+    barEl.style.backgroundColor=getColor(val);
+  }
+  update();
+  slider.addEventListener("input",update);
+}
+
+function syncFinalSlider(op1){
+  const slider=document.getElementById("finalSlider");
+  const valueEl=document.getElementById("finalValue");
+  const barEl=document.getElementById("finalBar");
+  const markerEl=document.getElementById("op1Marker");
+  const labelEl=document.getElementById("op1Label");
+  slider.value=50;
+  function update(){
+    const val=slider.value||50;
+    valueEl.textContent=val;
+    barEl.style.width=val+"%";
+    barEl.style.backgroundColor=getColor(val);
+    if(op1!==null){
+      markerEl.style.left=op1+"%";
+      labelEl.style.left=op1+"%";
+      labelEl.textContent="1回目: "+op1;
+    }
+  }
+  update();
+  slider.addEventListener("input",update);
+}
+
+// 画面切替
+function show(section){
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  section.classList.remove('hidden');
+}
+
+// HTMLイベント
+document.getElementById("agreeBtn").onclick=()=>{ 
+  document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+  show(document.getElementById("basicSection"));
+};
+
+document.getElementById("toInfoBtn").onclick=()=>{
+  const themeId=currentRound+1;
+  const infoCount = participantGroup==="A"||participantGroup==="C"?10:3;
+  data.info=factsDB[participantGroup][themeId].slice(0,infoCount);
+  document.getElementById("infoBox").innerHTML=data.info.map(x=>"<li>"+x+"</li>").join("");
+  show(document.getElementById("infoSection"));
+};
+
+document.getElementById("toOpinionBtn").onclick=()=>{
+  syncSlider(document.getElementById("opinionSlider"),document.getElementById("opinionValue"),document.getElementById("opinionBar"));
+  show(document.getElementById("sliderOpinionSection"));
+};
+
+document.getElementById("submitSlider").onclick=()=>{
+  data.op1=parseInt(document.getElementById("opinionSlider").value,10);
+  showTimeline();
+};
+
+document.getElementById("toFinalBtn").onclick=()=>{
+  syncFinalSlider(data.op1);
+  show(document.getElementById("finalOpinionSection"));
+};
+
+document.getElementById("submitFinal").onclick=()=>{
+  data.op2=parseInt(document.getElementById("finalSlider").value,10);
+  results.push({...data, round:currentRound+1});
+  currentRound++;
+  if(currentRound>=rounds){finishAll();}
+  else{
+    data={id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
+    document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+    show(document.getElementById("basicSection"));
+  }
+};
+
+// タイムライン
+function showTimeline() {
+  const t = document.getElementById("timeline");
+  t.innerHTML = "";
+  const themeId = currentRound + 1;
+  const posts = postsDB[participantGroup][themeId];
+
+  posts.forEach((txt, i) => {
+    const post = document.createElement("div");
+    post.className = "post";
+
+    // avatar
+    const av = document.createElement("div");
+    av.className = "avatar";
+    av.style.background = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    av.textContent = names[i % names.length][0];
+
+    // body
+    const body = document.createElement("div");
+    body.className = "post-body";
+
+    // いいね数（切り替え式）
+    let liked = false;
+    let likeCount = 0;
+
+    // いいねボタン（ハート）
+    const likeBtn = document.createElement("button");
+    likeBtn.className = "like-btn";
+    likeBtn.innerHTML = `♡ <span class="like-num">0</span>`;
+
+    likeBtn.addEventListener("click", () => {
+      liked = !liked; // ON / OFF 切替
+
+      if (liked) {
+        likeCount = 1;
+        likeBtn.classList.add("liked");
+
+        // アニメーション
+        likeBtn.classList.add("pop");
+        setTimeout(() => likeBtn.classList.remove("pop"), 300);
+
+        likeBtn.innerHTML = `❤ <span class="like-num">${likeCount}</span>`;
+      } else {
+        likeCount = 0;
+        likeBtn.classList.remove("liked");
+        likeBtn.innerHTML = `♡ <span class="like-num">${likeCount}</span>`;
+      }
+    });
+
+    body.innerHTML = `
+      <div class="meta">
+        <span class="name">${names[i % names.length]}</span>
+        <span class="handle">@user${i}</span>
+      </div>
+      <div class="post-text">${txt}</div>
+    `;
+
+    body.appendChild(likeBtn);
+    post.appendChild(av);
+    post.appendChild(body);
+    t.appendChild(post);
+  });
+
+  show(document.getElementById("timelineSection"));
+}
+
+
+
+// 完全終了処理
+function finishAll(){
+  participantNumber++;
+  localStorage.setItem("participantNumber",participantNumber);
+  document.getElementById("resultData").textContent=JSON.stringify(results,null,2);
+  show(document.getElementById("resultSection"));
+}
+
+// CSVダウンロード
+document.getElementById("downloadCsv").onclick=()=>{
+  if(results.length===0)return;
+  const header=["participant","group","round","info","op1","op2"];
+  const rows=results.map(r=>[r.id,r.group,r.round,`${r.info.join(";")}`,r.op1,r.op2]);
+  const csvContent=[header,...rows].map(e=>e.join(",")).join("\n");
+  const blob=new Blob([csvContent],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download="experiment_results.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+// ======= 戻るボタン修正 =======
+document.getElementById("backToConsent").onclick = ()=>show(document.getElementById("consentSection"));
+document.getElementById("backToBasic").onclick = ()=>show(document.getElementById("basicSection"));
+document.getElementById("backToInfoFromSlider").onclick = ()=>show(document.getElementById("infoSection"));
+document.getElementById("backToSlider").onclick = ()=>show(document.getElementById("sliderOpinionSection"));
+document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.getElementById("timelineSection"));
+
+</script>
+</div>
+</body>
+</html>
+
