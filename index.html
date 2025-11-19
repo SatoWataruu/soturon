@@ -624,6 +624,18 @@ function finishAll(){
   localStorage.setItem("participantNumber",participantNumber);
   document.getElementById("resultData").textContent=JSON.stringify(results,null,2);
   show(document.getElementById("resultSection"));
+
+  results.forEach(r => {
+  fetch("https://script.google.com/macros/s/AKfycbxBeyocK94JcMXiqyNtoshYYO5Rnnn1kQAJIE5OQamQ9lRhyEjrmpjWD2OAHMqkMt_2TA/exec", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(r)
+  })
+  .then(resp => resp.json())
+  .then(json => console.log("送信成功:", json))
+  .catch(err => console.error("送信失敗:", err));
+});
+
 }
 
 // CSVダウンロード
@@ -654,4 +666,5 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
