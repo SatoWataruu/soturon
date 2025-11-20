@@ -629,7 +629,7 @@ function finishAll() {
 
   // 各データを送信
   results.forEach(data => {
-    fetch(url, {
+    fetch("https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec", {
       method: "POST",
       mode: "cors", // スマホ対応
       headers: { "Content-Type": "application/json" },
@@ -672,6 +672,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
