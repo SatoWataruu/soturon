@@ -616,36 +616,32 @@ function showTimeline() {
   show(document.getElementById("timelineSection"));
 }
 
+<script>
+const url = "https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec"; // 最新URL
 
-
-// 完全終了処理
-const url = "https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec"; // ←必ず最新URLに置き換える
-
-// 完全終了処理
 function finishAll() {
-  // 参加者番号を増やす
   participantNumber++;
   localStorage.setItem("participantNumber", participantNumber);
 
-  // 結果を画面に表示
+  // 結果を表示
   document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
   show(document.getElementById("resultSection"));
 
-  // 各結果をGASに送信
+  // 各データを送信
   results.forEach(data => {
     fetch(url, {
       method: "POST",
-      mode: "cors", // ←スマホから送信するため必須
-      headers: {
-        "Content-Type": "application/json"
-      },
+      mode: "cors", // スマホ対応
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(json => console.log("送信成功:", json))
+    .then(response => response.text()) // text() にすることでブラウザ依存を回避
+    .then(result => console.log("送信成功:", result))
     .catch(err => console.error("送信失敗:", err));
   });
 }
+</script>
+
 
 
 // CSVダウンロード
@@ -676,6 +672,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
