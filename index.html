@@ -626,7 +626,7 @@ function finishAll(){
   show(document.getElementById("resultSection"));
 
   results.forEach(r => {
-  fetch("https://script.google.com/macros/s/AKfycbxBeyocK94JcMXiqyNtoshYYO5Rnnn1kQAJIE5OQamQ9lRhyEjrmpjWD2OAHMqkMt_2TA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(r)
@@ -666,6 +666,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
