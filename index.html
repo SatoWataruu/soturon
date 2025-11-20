@@ -616,7 +616,7 @@ function showTimeline() {
   show(document.getElementById("timelineSection"));
 }
 
-  const url = "https://script.google.com/macros/s/AKfycbwLaA6Z1u9GgoXA6EsrUGNeBgxLPLQyYBMmZbN1hkSZ68UU3ENw4M6b0j7zApGMRpvmyg/exec";
+const url = "https://script.google.com/macros/s/AKfycbwLaA6Z1u9GgoXA6EsrUGNeBgxLPLQyYBMmZbN1hkSZ68UU3ENw4M6b0j7zApGMRpvmyg/exec";
 
 function finishAll() {
   participantNumber++;
@@ -637,6 +637,7 @@ function finishAll() {
     .catch(err => console.error("送信失敗:", err));
   });
 }
+
 
 
 // CSVダウンロード
@@ -667,6 +668,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
