@@ -619,24 +619,22 @@ function showTimeline() {
 
 
 // 完全終了処理
-function finishAll(){
-  participantNumber++;
-  localStorage.setItem("participantNumber",participantNumber);
-  document.getElementById("resultData").textContent=JSON.stringify(results,null,2);
-  show(document.getElementById("resultSection"));
-
-  results.forEach(r => {
-  fetch("https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(r)
-  })
-  .then(resp => resp.json())
-  .then(json => console.log("送信成功:", json))
-  .catch(err => console.error("送信失敗:", err));
-});
-
+function finishAll() {
+  allData.forEach(data => {
+    fetch(https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec, {
+      method: "POST",
+      mode: "cors",                         // ← これ追加
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(result => console.log("送信成功:", result))
+    .catch(error => console.error("送信失敗:", error));
+  });
 }
+
 
 // CSVダウンロード
 document.getElementById("downloadCsv").onclick=()=>{
@@ -666,6 +664,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
