@@ -615,17 +615,16 @@ function showTimeline() {
 
   show(document.getElementById("timelineSection"));
 }
-const url = "https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec";
+
+  const url = "https://script.google.com/macros/s/AKfycbyZJ0PiBU1_SZU3bKpb-BJVFhuH0KGPERTo1AqpXNnJDZdax2MMe_0T0epUYiaHMnf2Mg/exec";
 
 function finishAll() {
   participantNumber++;
   localStorage.setItem("participantNumber", participantNumber);
 
-  // 結果を表示
-  document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
+  document.getElementById("resultData").textContent = JSON.stringify(results,null,2);
   show(document.getElementById("resultSection"));
 
-  // 各データを送信
   results.forEach(data => {
     fetch(url, {
       method: "POST",
@@ -633,7 +632,7 @@ function finishAll() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-    .then(response => response.text())
+    .then(resp => resp.text())
     .then(result => console.log("送信成功:", result))
     .catch(err => console.error("送信失敗:", err));
   });
@@ -668,6 +667,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
