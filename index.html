@@ -615,7 +615,7 @@ function showTimeline() {
 
   show(document.getElementById("timelineSection"));
 }
-const url = "https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec"; // 最新URL
+const url = "https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec";
 
 function finishAll() {
   participantNumber++;
@@ -627,17 +627,18 @@ function finishAll() {
 
   // 各データを送信
   results.forEach(data => {
-    fetch("https://script.google.com/macros/s/AKfycbwILNPmJYAV74sdFrCpSo5gmepN7sPqWmwI26dkzxDyhAJM1kUl2cW6zcMgvx7xS9Q0Ow/exec", {
+    fetch(url, {
       method: "POST",
-      mode: "cors", // スマホ対応
+      mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-    .then(response => response.text()) // text() にすることでブラウザ依存を回避
+    .then(response => response.text())
     .then(result => console.log("送信成功:", result))
     .catch(err => console.error("送信失敗:", err));
   });
 }
+
 
 // CSVダウンロード
 document.getElementById("downloadCsv").onclick=()=>{
@@ -667,6 +668,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
