@@ -509,13 +509,18 @@ document.getElementById("agreeBtn").onclick=()=>{
   show(document.getElementById("basicSection"));
 };
 
-document.getElementById("toInfoBtn").onclick=()=>{
-  const themeId=currentRound+1;
-  const infoCount = participantGroup==="A"||participantGroup==="C"?10:3;
-  data.info=factsDB[participantGroup][themeId].slice(0,infoCount);
-  document.getElementById("infoBox").innerHTML=data.info.map(x=>"<li>"+x+"</li>").join("");
+document.getElementById("toInfoBtn").onclick = () => {
+  const themeId = currentRound + 1;
+  const infoCount = participantGroup === "A" || participantGroup === "C" ? 10 : 3;
+  
+  const infoForDisplay = factsDB[participantGroup][themeId].slice(0, infoCount);
+  document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("");
+  
   show(document.getElementById("infoSection"));
+  
+  // 送信用には data.info に入れない
 };
+
 
 document.getElementById("toOpinionBtn").onclick=()=>{
   syncSlider(document.getElementById("opinionSlider"),document.getElementById("opinionValue"),document.getElementById("opinionBar"));
@@ -664,6 +669,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
