@@ -531,6 +531,16 @@ document.getElementById("startBtn").onclick = () => {
   show(document.getElementById("basicSection"));
 };
 
+  document.getElementById("agreeBtn").onclick = () => {
+  // 基本情報ページ表示前に準備（必要ならテキスト更新）
+  document.getElementById("basicText").innerHTML = `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+
+  // 同意セクションを隠して基本情報セクションを表示
+  hide(document.getElementById("agreeSection"));
+  show(document.getElementById("basicInfoSection"));
+};
+
+
   
 document.getElementById("toInfoBtn").onclick = () => {
   const themeId = currentRound + 1;
@@ -717,6 +727,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
