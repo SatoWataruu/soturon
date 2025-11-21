@@ -546,6 +546,13 @@ document.getElementById("submitFinal").onclick=()=>{
     data={id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
     document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
     show(document.getElementById("basicSection"));
+    // submitFinal 内
+const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
+                         .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
+data.likedPosts = likedPosts; // ここに追加
+
+results.push({...data, round:currentRound+1});
+
   }
 };
 
@@ -669,6 +676,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
