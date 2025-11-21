@@ -518,17 +518,17 @@ function show(section){
 }
 
 // HTMLイベント
-document.getElementById("agreeBtn").onclick=()=>{ 
-  document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
-  show(document.getElementById("basicSection"));
-};
 
 document.getElementById("agreeBtn").onclick = () => {
-  hide(document.getElementById("agreeSection"));       // 同意セクションを隠す
-  show(document.getElementById("basicInfoSection"));   // 基本情報セクションを表示
+  // 基本情報ページ表示前に準備（基本テキスト更新）
+  document.getElementById("basicText").innerHTML = `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+
+  // 同意セクションを隠して基本情報セクションを表示
+  hide(document.getElementById("agreeSection"));
+  show(document.getElementById("basicInfoSection"));
 };
 
-
+  
 document.getElementById("toInfoBtn").onclick = () => {
   const themeId = currentRound + 1;
   const infoCount = participantGroup === "A" || participantGroup === "C" ? 10 : 3;
@@ -714,6 +714,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
