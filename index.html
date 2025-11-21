@@ -519,9 +519,18 @@ function show(section){
 
 // HTMLイベント
 document.getElementById("startBtn").onclick = () => {
+  const ageValue = document.getElementById("ageInput").value;
+  const genderValue = document.getElementById("genderInput").value;
+
+  // バリデーション
+  if (!ageValue || !genderValue) {
+    alert("年齢と性別を入力してください。");
+    return; // ここで処理を止める
+  }
+
   // 基本情報を data に保存
-  data.age = parseInt(document.getElementById("ageInput").value, 10) || null;
-  data.gender = document.getElementById("genderInput").value || null;
+  data.age = parseInt(ageValue, 10);
+  data.gender = genderValue;
 
   // 基本説明テキストを更新
   document.getElementById("basicText").innerHTML = 
@@ -530,6 +539,7 @@ document.getElementById("startBtn").onclick = () => {
   // 基本情報セクションを隠して、基本説明セクションを表示
   show(document.getElementById("basicSection"));
 };
+
 
 document.getElementById("agreeBtn").onclick = () => {
   show(document.getElementById("basicInfoSection"));
@@ -721,6 +731,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
