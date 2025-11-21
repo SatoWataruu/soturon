@@ -306,7 +306,7 @@ section {
 <h3>アンケートの進み方</h3>
 
 <p>このアンケートは、以下のステップで進みます。  
-全体で 5〜7 分ほどを想定しています。</p>
+全体で 10~15分ほどを想定しています。</p>
 
 <p><strong>1. 同意確認：</strong><br>
 上記の説明を読んだうえで、参加するかどうかを選択します。</p>
@@ -321,7 +321,7 @@ section {
 説明を読んだ直後の、あなたの率直な意見をお聞きします。</p>
 
 <p><strong>5. 追加情報（事実や事例）：</strong><br>
-そのテーマに関する中立的な追加情報が 1〜7 件ランダムで表示されます。</p>
+</p>
 
 <p><strong>6. 主観的な意見（SNS風タイムライン）：</strong><br>
 他の人の「もしこんなテーマがあったら私はこう思う」という意見が複数表示されます。</p>
@@ -330,7 +330,7 @@ section {
 追加情報・他者意見を読んだうえで、考えが変化したかどうかをスライダーで回答します。</p>
 
 <p><strong>8. 回答完了：</strong><br>
-最終意見を送信すると結果の確認ができ、希望される方はデータを CSV でダウンロードできます。</p>
+</p>
 
 <p>すべて画面内で完結し、外部への送信は行われませんので、安心してご参加ください。</p>
 
@@ -533,10 +533,6 @@ document.getElementById("startBtn").onclick = () => {
   data.age = parseInt(ageValue, 10);
   data.gender = genderValue;
 
-  // 基本説明テキストを更新
-  document.getElementById("basicText").innerHTML = 
-      `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
-
   // 基本情報セクションを隠して基本説明セクションを表示
   show(document.getElementById("basicSection"));
 };
@@ -702,26 +698,6 @@ function finishAll() {
   });
 }
 
-
-
-
-// CSVダウンロード
-document.getElementById("downloadCsv").onclick=()=>{
-  if(results.length===0)return;
-  const header=["participant","group","round","info","op1","op2"];
-  const rows=results.map(r=>[r.id,r.group,r.round,`${r.info.join(";")}`,r.op1,r.op2]);
-  const csvContent=[header,...rows].map(e=>e.join(",")).join("\n");
-  const blob=new Blob([csvContent],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download="experiment_results.csv";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
-
 // ======= 戻るボタン修正 =======
 document.getElementById("backToConsent").onclick = ()=>show(document.getElementById("consentSection"));
 document.getElementById("backToBasic").onclick = ()=>show(document.getElementById("basicSection"));
@@ -733,6 +709,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
