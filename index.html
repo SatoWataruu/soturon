@@ -518,6 +518,19 @@ function show(section){
 }
 
 // HTMLイベント
+document.getElementById("startBtn").onclick = () => {
+  // 基本情報を data に保存
+  data.age = parseInt(document.getElementById("ageInput").value, 10) || null;
+  data.gender = document.getElementById("genderInput").value || null;
+
+  // 基本説明テキストを更新
+  document.getElementById("basicText").innerHTML = 
+      `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+
+  // 基本情報セクションを隠して、基本説明セクションを表示
+  show(document.getElementById("basicSection"));
+};
+
 
 document.getElementById("agreeBtn").onclick = () => {
   // 基本情報ページ表示前に準備（基本テキスト更新）
@@ -714,6 +727,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
