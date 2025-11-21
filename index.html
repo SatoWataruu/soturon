@@ -518,14 +518,15 @@ function show(section){
 }
 
 // HTMLイベント
+// 「ラウンド開始」ボタン
 document.getElementById("startBtn").onclick = () => {
+  // 入力必須チェック
   const ageValue = document.getElementById("ageInput").value;
   const genderValue = document.getElementById("genderInput").value;
 
-  // バリデーション
   if (!ageValue || !genderValue) {
-    alert("年齢と性別を入力してください。");
-    return; // ここで処理を止める
+    alert("年齢と性別を入力してください");
+    return; // 入力がない場合は進めない
   }
 
   // 基本情報を data に保存
@@ -536,9 +537,10 @@ document.getElementById("startBtn").onclick = () => {
   document.getElementById("basicText").innerHTML = 
       `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
 
-  // 基本情報セクションを隠して、基本説明セクションを表示
+  // 基本情報セクションを隠して基本説明セクションを表示
   show(document.getElementById("basicSection"));
 };
+
 
 
 document.getElementById("agreeBtn").onclick = () => {
@@ -731,6 +733,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
