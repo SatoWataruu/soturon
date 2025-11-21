@@ -341,7 +341,7 @@ section {
 </div>
 </section>
 
-  <section id="basicInfoSection">
+  <section id="basicInfoSection" class="hidden">
   <h2>基本情報を入力してください</h2>
   <label>年齢: <input type="number" id="ageInput" /></label><br>
   <label>性別: 
@@ -351,7 +351,7 @@ section {
       <option value="other">その他</option>
     </select>
   </label><br>
-  <button id="startBtn" class="btn primary">アンケート開始</button>
+  <button id="startBtn" class="btn primary">ラウンド開始</button>
 </section>
 
 
@@ -522,6 +522,12 @@ document.getElementById("agreeBtn").onclick=()=>{
   document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
   show(document.getElementById("basicSection"));
 };
+
+document.getElementById("agreeBtn").onclick = () => {
+  hide(document.getElementById("agreeSection"));       // 同意セクションを隠す
+  show(document.getElementById("basicInfoSection"));   // 基本情報セクションを表示
+};
+
 
 document.getElementById("toInfoBtn").onclick = () => {
   const themeId = currentRound + 1;
@@ -708,6 +714,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
