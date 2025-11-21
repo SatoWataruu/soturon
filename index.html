@@ -266,9 +266,6 @@ section {
 
 </style>
 
-
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 <div class="container">
@@ -654,48 +651,6 @@ document.getElementById("downloadCsv").onclick=()=>{
   URL.revokeObjectURL(url);
 };
 
-  const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    firebase.auth().signInAnonymously()
-      .then(user => console.log("ログイン成功 uid:", user.uid))
-      .catch(err => console.error(err));
-
-    const DB_URL = "https://YOUR_PROJECT_ID.firebaseio.com/results.json";
-
-    document.querySelectorAll(".like-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        btn.classList.toggle("liked");
-      });
-    });
-
-    function finishAll() {
-      const answers = results.map(r => r); 
-      const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
-                               .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
-
-      const dataToSend = {
-        timestamp: new Date().toISOString(),
-        answers: answers,
-        likedPosts: likedPosts,
-        uid: firebase.auth().currentUser?.uid || null
-      };
-
-      fetch(DB_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataToSend)
-      })
-      .then(resp => resp.json())
-      .then(json => alert("送信完了！"))
-      .catch(err => console.error("送信失敗:", err));
-    }
-
 // ======= 戻るボタン修正 =======
 document.getElementById("backToConsent").onclick = ()=>show(document.getElementById("consentSection"));
 document.getElementById("backToBasic").onclick = ()=>show(document.getElementById("basicSection"));
@@ -707,6 +662,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
