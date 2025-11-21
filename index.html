@@ -616,28 +616,28 @@ function showTimeline() {
   show(document.getElementById("timelineSection"));
 }
 
-const url = "https://script.google.com/macros/s/AKfycbwLaA6Z1u9GgoXA6EsrUGNeBgxLPLQyYBMmZbN1hkSZ68UU3ENw4M6b0j7zApGMRpvmyg/exec";
+const DB_URL = "https://soturon-answers-default-rtdb.firebaseio.com/results.json"; // ← ここを置き換える
 
 function finishAll() {
   participantNumber++;
   localStorage.setItem("participantNumber", participantNumber);
 
-  document.getElementById("resultData").textContent = JSON.stringify(results,null,2);
+  // 表示（必要なら）
+  document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
   show(document.getElementById("resultSection"));
 
+  // 送信（各結果をDBにpush）
   results.forEach(data => {
-    fetch(url, {
-      method: "POST",
-      mode: "cors",
+    fetch(DB_URL, {
+      method: "POST",               // POSTでpush（ユニークキーが付く）
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-    .then(resp => resp.text())
-    .then(result => console.log("送信成功:", result))
-    .catch(err => console.error("送信失敗:", err));
+    .then(resp => resp.json())
+    .then(json => console.log("Firebase送信成功:", json)) // json.name に生成されたキーが入る
+    .catch(err => console.error("Firebase送信失敗:", err));
   });
 }
-
 
 
 // CSVダウンロード
@@ -668,6 +668,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
