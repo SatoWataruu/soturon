@@ -613,23 +613,26 @@ function showTimeline() {
 const DB_URL = "https://soturon-answers-default-rtdb.firebaseio.com/results.json"; // ← ここを置き換える
 
 function finishAll() {
-  // 押したイイねの投稿文章だけを取得
-  const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
-                           .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
+  participantNumber++;
+  localStorage.setItem("participantNumber", participantNumber);
 
-  // Firebase に送信
-  fetch(DB_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      timestamp: new Date().toISOString(),
-      likedPosts: likedPosts
+  // 表示（必要なら）
+  document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
+  show(document.getElementById("resultSection"));
+
+  // 送信（各結果をDBにpush）
+  results.forEach(data => {
+    fetch(DB_URL, {
+      method: "POST",               // POSTでpush（ユニークキーが付く）
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     })
-  })
-  .then(resp => resp.json())
-  .then(json => alert("送信完了！"))
-  .catch(err => console.error("送信失敗:", err));
+    .then(resp => resp.json())
+    .then(json => console.log("Firebase送信成功:", json)) // json.name に生成されたキーが入る
+    .catch(err => console.error("Firebase送信失敗:", err));
+  });
 }
+
 
 
 
