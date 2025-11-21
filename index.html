@@ -341,6 +341,20 @@ section {
 </div>
 </section>
 
+  <section id="basicInfoSection">
+  <h2>基本情報を入力してください</h2>
+  <label>年齢: <input type="number" id="ageInput" /></label><br>
+  <label>性別: 
+    <select id="genderInput">
+      <option value="male">男性</option>
+      <option value="female">女性</option>
+      <option value="other">その他</option>
+    </select>
+  </label><br>
+  <button id="startBtn" class="btn primary">アンケート開始</button>
+</section>
+
+
 <section id="basicSection" class="hidden">
 <h2>基礎説明</h2>
 <div class="infoBox" id="basicText"></div>
@@ -694,6 +708,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
