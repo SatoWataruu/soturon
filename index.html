@@ -277,7 +277,7 @@ section {
 <body>
 <div class="container">
 <h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
-<p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
+<p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 
 <section id="consentSection">
 <h2>同意と注意</h2>
@@ -319,16 +319,16 @@ section {
 上記の説明を読んだうえで、参加するかどうかを選択します。</p>
 
 <p><strong>2. 基礎説明（任意）：</strong><br>
-年齢・性別など、簡単な基本情報をお聞きします。すべて匿名で、空欄でも構いません。</p>
+年齢・性別など、簡単な基本情報をお聞きします。</p>
 
 <p><strong>3. 架空設定の紹介：</strong><br>
 今回扱う「架空の装置・儀式・制度」について、短い説明文を読みます。</p>
 
-<p><strong>4. 最初の賛否（スライダー形式）：</strong><br>
-説明を読んだ直後の、あなたの率直な意見をお聞きします。</p>
+<p><strong>4. 追加情報（架空の事実）：</strong><br>
+新たに架空の説明をいくつか追加します。</p>
 
-<p><strong>5. 追加情報（事実や事例）：</strong><br>
-</p>
+<p><strong>5. 最初の賛否（スライダー形式）：</strong><br>
+説明を読んだ直後の、あなたの率直な賛否をお聞きします。</p>
 
 <p><strong>6. 主観的な意見（SNS風タイムライン）：</strong><br>
 他の人の「もしこんなテーマがあったら私はこう思う」という意見が複数表示されます。</p>
@@ -418,6 +418,7 @@ section {
 <div id="op1Label" style="position:absolute; top:-20px; font-size:0.85rem; font-weight:bold; color:red; transform:translateX(-50%); pointer-events:none;"></div>
 </div>
 <input type="range" id="finalSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+<span>0 反対</span><span>50 どちらでもない</span><span>100 賛成</span>
 <div class="navRow" style="margin-top:12px;">
 <button id="backToTimelineFromFinal" class="btn outline">戻る</button>
 <button id="submitFinal" class="btn primary">完了</button>
@@ -425,9 +426,9 @@ section {
 </section>
 
 <section id="resultSection" class="hidden">
-<h2>回答完了</h2>
+<h2>回答完了しました　ありがとうございました。</h2>
+<h2>ページ消してもらって構いません。</h2>
 <pre id="resultData"></pre>
-<button id="downloadCsv" class="btn outline">CSVダウンロード</button>
 </section>
 
 <script>
@@ -460,9 +461,9 @@ const rounds = 3;
 const results = [];
 
 let data = {id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
-const themeTitles = ["<strong>過去の選択を“別の選択肢にした場合の結果”として見せるデバイス「IFルック」 についての賛否</strong><p>説明：架空都市アルトリウスで「IFルック」というデバイスが開発された。IFルックとは、ユーザーの過去の選択肢と行動データを解析し、“別の選択をした世界のシミュレーション映像”を生成するデバイスである。このデバイスを使用することで、過去にもし別の選択をしていたら自分がどうなっていたかというのを、AIが推測して映像で疑似体験できることができます。</p>",
-"<strong>過去の選択を“夢を録画・解析し、映像として再生できる機能を持つ「ドリームキャプチャ」についての賛否</strong><p>説明：架空都市アルトリウスで「ドリームキャプチャ」というデバイスが開発されました。このデバイスは、ユーザーが睡眠中に見る夢を録画・解析し、映像として再生できる機能を持っています。さらに、ユーザーの希望に応じて、他人と夢を共有することも可能です。このデバイスを用いることで、夢の内容を鮮明に振り返ったり、他者の夢を体験して新しいアイデアや感覚を得たりすることができます。</p>",
-"<strong>過去の記憶を封印することができる儀式についての賛否</strong><p>架空都市アルトリウスでは、古くから「メモリーロック儀式」と呼ばれる伝統的な儀式が存在します。この儀式は、個人が「忘れたい」と望む過去の記憶を象徴的に封印し、二度と思い出さないようにするためのものです。儀式は宗教的な要素と心理療法的な作法が組み合わせて発展してきたとされ、街の神殿で専門の“記憶司（メムガイド）”が執り行います。</p><p>儀式では、封印したい記憶を象徴物（カード、石、紙など）に書き込んだ後、特別な箱「ロックチェスト」に収めます。この行為には強い心理的暗示効果があるとされ、多くの市民が人生の転機や再出発の際に利用してきました。</p><p>ただし、記憶は物理的に消えるわけではなく、あくまで“思い出しにくくなる”程度にとどまります。そのため、儀式の効果や倫理性を巡って市民の間では賛否が分かれています。</p>",
+const themeTitles = ["<strong>過去の選択を“別の選択肢にした場合の結果”として見せるデバイス「IFルック」 についての賛否</strong><p>説明：架空都市Aで「IFルック」というデバイスが開発された。IFルックとは、ユーザーの過去の選択肢と行動データを解析し、“別の選択をした世界のシミュレーション映像”を生成するデバイスである。このデバイスを使用することで、過去にもし別の選択をしていたら自分がどうなっていたかというのを、AIが推測して映像で疑似体験できることができます。</p>",
+"<strong>過去の選択を“夢を録画・解析し、映像として再生できる機能を持つ「ドリームキャプチャ」についての賛否</strong><p>説明：架空都市Bで「ドリームキャプチャ」というデバイスが開発されました。このデバイスは、ユーザーが睡眠中に見る夢を録画・解析し、映像として再生できる機能を持っています。さらに、ユーザーの希望に応じて、他人と夢を共有することも可能です。このデバイスを用いることで、夢の内容を鮮明に振り返ったり、他者の夢を体験して新しいアイデアや感覚を得たりすることができます。</p>",
+"<strong>過去の記憶を封印することができる儀式についての賛否</strong><p>架空都市Cでは、古くから「メモリーロック儀式」と呼ばれる伝統的な儀式が存在します。この儀式は、個人が「忘れたい」と望む過去の記憶を象徴的に封印し、二度と思い出さないようにするためのものです。儀式は宗教的な要素と心理療法的な作法が組み合わせて発展してきたとされ、街の神殿で専門の“記憶司（メムガイド）”が執り行います。</p><p>儀式では、封印したい記憶を象徴物（カード、石、紙など）に書き込んだ後、特別な箱「ロックチェスト」に収めます。この行為には強い心理的暗示効果があるとされ、多くの市民が人生の転機や再出発の際に利用してきました。</p><p>ただし、記憶は物理的に消えるわけではなく、あくまで“思い出しにくくなる”程度にとどまります。そのため、儀式の効果や倫理性を巡って市民の間では賛否が分かれています。</p>",
 "テーマ4",
 "テーマ5",
 "テーマ6"];
@@ -544,7 +545,7 @@ document.getElementById("startBtn").onclick = () => {
   // 基本情報セクションを隠して基本説明セクションを表示
   show(document.getElementById("basicSection"));
   document.getElementById("basicText").innerHTML =
-    `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+    `<br>テーマ: ${themeTitles[currentRound]}`;
 };
 
 document.getElementById("agreeBtn").onclick = () => {
@@ -611,7 +612,7 @@ document.getElementById("submitFinal").onclick = () => {
     document.querySelectorAll(".like-btn.liked").forEach(btn => btn.classList.remove("liked"));
 
     // 次ラウンドの基本情報表示
-    document.getElementById("basicText").innerHTML = `あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+    document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
     show(document.getElementById("basicSection"));
   }
 };
@@ -717,6 +718,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
