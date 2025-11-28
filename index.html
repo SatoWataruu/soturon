@@ -585,7 +585,7 @@ document.getElementById("toInfoBtn").onclick = () => {
   const infoCount = participantGroup === "A" || participantGroup === "C" ? 10 : 3;
   
   const infoForDisplay = factsDB[participantGroup][themeId].slice(0, infoCount);
-  document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("<br><br>");
+  document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("<br>");
   
   show(document.getElementById("infoSection"));
   
@@ -745,6 +745,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
