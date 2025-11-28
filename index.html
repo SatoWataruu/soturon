@@ -24,7 +24,15 @@ p.small{color:var(--muted);margin:8px 0 12px;font-size:0.95rem;line-height:1.6;}
 section{margin-top:18px;}
 .hidden{display:none;}
 ul{margin:8px 0 12px 18px;}
-.timeline{margin-top:12px;max-height:360px;overflow:auto;padding-right:6px;}
+  
+.timeline{
+  margin-top: 12px;
+  padding-right: 6px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px #eee;
+}
+  
 .post{display:flex;gap:12px;padding:12px 8px;border-bottom:1px solid #f0f0f0;background:#fff;margin-bottom:6px;border-radius:8px;align-items:flex-start;}
 .avatar{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex:0 0 48px;}
 .post-body{flex:1;}
@@ -278,6 +286,7 @@ section {
 <div class="container">
 <h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
+<p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
 <section id="consentSection">
 <h2>同意と注意</h2>
@@ -290,21 +299,22 @@ section {
 
 <p><strong>参加にあたってのお願い</strong></p>
 
-<p><strong>・任意参加で、辞めても問題なし：</strong><br>
-アンケートは完全に自由参加です。途中でページを閉じても構いません。</p>
-
-<p><strong>・架空の内容を扱います：</strong><br>
-質問や設定には、実際には存在しない装置・儀式・制度などが登場します。  
+<p><strong>・架空の内容を扱います</strong><br>
+3つのテーマがあり、質問や設定には、実際には存在しない装置・儀式・制度などが登場します。  
 回答はあくまで「もし本当にあったら…」という想像を楽しむ気持ちでお願いします。</p>
 
-<p><strong>・心理的負荷について：</strong><br>
+<p><strong>・注意点</strong><br>
+回答中はページをリロードしないようお願いします。
+また、一度このアンケートに参加したことのある方は解答しないようお願いします。</p>
+
+<p><strong>・心理的負荷について</strong><br>
 テーマによっては、過去の選択や記憶について「もしも」を考える場面があります。  
 不快に感じた場合は無理をせず、いつでも中断してください。</p>
 
-<p><strong>・個人情報の保護：</strong><br>
+<p><strong>・個人情報の保護</strong><br>
 回答は匿名で収集されます。氏名・連絡先など、個人が特定される情報は入力しないでください。</p>
 
-<p><strong>・研究目的：</strong><br>
+<p><strong>・研究目的</strong><br>
 集めたデータは、卒業研究における統計分析に使用します。  
 公開される場合も匿名化され、個人が特定される形では扱われません。</p>
 
@@ -313,30 +323,31 @@ section {
 <h3>アンケートの進み方</h3>
 
 <p>このアンケートは、以下のステップで進みます。  
-全体で 10~15分ほどを想定しています。</p>
+3つのテーマがあり、全体で 10~15分ほどを想定しています。</p>
 
-<p><strong>1. 同意確認：</strong><br>
+<p><strong>1. 同意確認</strong><br>
 上記の説明を読んだうえで、参加するかどうかを選択します。</p>
 
-<p><strong>2. 基礎説明（任意）：</strong><br>
+<p><strong>2. 基礎情報入力</strong><br>
 年齢・性別など、簡単な基本情報をお聞きします。</p>
 
-<p><strong>3. 架空設定の紹介：</strong><br>
+<p><strong>3. 架空設定の紹介</strong><br>
 今回扱う「架空の装置・儀式・制度」について、短い説明文を読みます。</p>
 
-<p><strong>4. 追加情報（架空の事実）：</strong><br>
+<p><strong>4. 追加情報（架空の事実）</strong><br>
 新たに架空の説明をいくつか追加します。</p>
 
-<p><strong>5. 最初の賛否（スライダー形式）：</strong><br>
+<p><strong>5. 最初の賛否（スライダー形式）</strong><br>
 説明を読んだ直後の、あなたの率直な賛否をお聞きします。</p>
 
-<p><strong>6. 主観的な意見（SNS風タイムライン）：</strong><br>
+<p><strong>6. 主観的な意見（SNS風タイムライン）</strong><br>
 他の人の「もしこんなテーマがあったら私はこう思う」という意見が複数表示されます。</p>
 
-<p><strong>7. 最終の意見：</strong><br>
+<p><strong>7. 最終の意見</strong><br>
 追加情報・他者意見を読んだうえで、考えが変化したかどうかをスライダーで回答します。</p>
+<p>この一連の流れを3テーマ分繰り返してもらいます＞
 
-<p><strong>8. 回答完了：</strong><br>
+<p><strong>8. 回答完了</strong><br>
 </p>
 
 <p>すべて画面内で完結し、外部への送信は行われませんので、安心してご参加ください。</p>
@@ -441,7 +452,7 @@ section {
 
 
 <section id="resultSection" class="hidden">
-<h2>回答完了しました　ありがとうございました。</h2>
+<h2>回答完了しました　御協力ありがとうございました！ ＊2度以上このアンケートに回答しないようお願いいたします。</h2>
 <h2>ページ消してもらって構いません。</h2>
 <pre id="resultData"></pre>
 </section>
@@ -733,6 +744,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
