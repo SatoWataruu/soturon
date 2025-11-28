@@ -593,10 +593,11 @@ document.getElementById("startBtn").onclick = () => {
 };
 
 // 同意ボタン
-document.getElementById("agreeBtn").onclick = () => {
-    show(document.getElementById("basicInfoSection"));
+document.getElementById("agreeBtn").onclick=()=>{ 
+  document.getElementById("basicText").innerHTML=`テーマ: ${themeTitles[currentRound]}`;
+  show(document.getElementById("basicSection"));
 };
-
+  
 // 基本説明 → 追加情報
 document.getElementById("toInfoBtn").onclick = () => {
     const themeId = currentRound + 1;
@@ -765,6 +766,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body>
 </html>
+
 
 
 
