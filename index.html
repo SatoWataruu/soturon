@@ -271,6 +271,21 @@ section {
   box-shadow: inset 0 0 0 1px #eee;
 }
 
+/* タイムラインを完全に一覧表示（横スクロール禁止） */
+.timeline {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important; /* 横スクロール禁止 */
+  overflow-y: visible;           /* 全部表示 */
+  max-height: none !important;   /* 制限解除 */
+}
+
+/* post 要素が横に広がらないように */
+.post {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;        /* はみ出しを防止 */
+}
 
 
 </style>
@@ -786,6 +801,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
