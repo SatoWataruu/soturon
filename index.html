@@ -594,7 +594,7 @@ document.getElementById("startBtn").onclick = () => {
 
 // 同意ボタン
 document.getElementById("agreeBtn").onclick=()=>{ 
-  document.getElementById("basicText").innerHTML=`テーマ: ${themeTitles[currentRound]}`;
+  document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
   show(document.getElementById("basicSection"));
 };
   
@@ -766,6 +766,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body>
 </html>
+
 
 
 
