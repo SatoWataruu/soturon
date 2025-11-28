@@ -293,7 +293,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート3</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート4</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -586,9 +586,11 @@ document.getElementById("startBtn").onclick = () => {
     document.getElementById("basicText").innerHTML = <br>テーマ: ${themeTitles[currentRound]}; 
 }; 
 
-document.getElementById("agreeBtn").onclick = () => { 
-    show(document.getElementById("basicInfoSection")); 
-}; 
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("agreeBtn").onclick = () => {
+    show(document.getElementById("basicInfoSection"));
+  };
+});
 
 document.getElementById("toInfoBtn").onclick = () => { 
     const themeId = currentRound + 1; 
@@ -722,6 +724,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body>
 </html>
+
 
 
 
