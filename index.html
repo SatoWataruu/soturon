@@ -459,38 +459,12 @@ section {
 
 </section>
 
-<section id="influenceSection" class="hidden">
-  <h2>あなたは他人の意見に影響されやすいと思いますか？</h2>
-  <p class="small">
-    直感でお答えください。
-  </p>
-
-  <div style="margin-top:16px;">
-    <label style="display:block; margin-bottom:8px; font-weight:600;">
-      影響されやすさ（0 = 全くない / 100 = とてもある）
-    </label>
-
-    <input type="range" id="influenceSlider" min="0" max="100" value="50" step="1" style="width:100%;">
-
-    <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:0.9rem;">
-      <span>0</span>
-      <span>50</span>
-      <span>100</span>
-    </div>
-  </div>
-
-  <div class="navRow" style="margin-top:20px;">
-    <button id="backToFinalFromInfluence" class="btn outline">戻る</button>
-    <button id="submitInfluence" class="btn primary">完了</button>
-  </div>
-</section>
-
 <section id="resultSection" class="hidden">
 <h2>回答完了しました　御協力ありがとうございました！ ＊2度以上このアンケートに回答しないようお願いいたします。</h2>
 <h2>ページ消してもらって構いません。</h2>
 <pre id="resultData"></pre>
 </section>
-
+  
 <script>
 // ================== 参加者番号 & 1/4ランダムグループ ==================
 let participantNumber = parseInt(localStorage.getItem("participantNumber") || Math.floor(Math.random()*1000),10);
@@ -596,74 +570,143 @@ function show(section) {
 }
 
 // HTMLイベント
+// HTMLイベント
+
+// 「ラウンド開始」ボタン
 document.getElementById("startBtn").onclick = () => {
+    // 入力必須チェック
     const ageValue = document.getElementById("ageInput").value;
     const genderValue = document.getElementById("genderInput").value;
+
     if (!ageValue || !genderValue) {
         alert("年齢と性別を入力してください");
-        return;
+        return; // 入力がない場合は進めない
     }
+
+    // 基本情報を data に保存
     data.age = parseInt(ageValue, 10);
     data.gender = genderValue;
+
+    // 基本情報セクションを隠して基本説明セクションを表示
     show(document.getElementById("basicSection"));
     document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
 };
 
-document.getElementById("agreeBtn").onclick = () => { show(document.getElementById("basicInfoSection")); };
+// 同意ボタン
+document.getElementById("agreeBtn").onclick = () => {
+    show(document.getElementById("basicInfoSection"));
+};
 
+// 基本説明 → 追加情報
 document.getElementById("toInfoBtn").onclick = () => {
     const themeId = currentRound + 1;
     const infoCount = participantGroup === "A" || participantGroup === "C" ? 10 : 3;
     const infoForDisplay = factsDB[participantGroup][themeId].slice(0, infoCount);
     document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("<br>");
     show(document.getElementById("infoSection"));
+    // 送信用には data.info に入れない
 };
 
+// 追加情報 → 意見（スライダー）
 document.getElementById("toOpinionBtn").onclick = () => {
-    syncSlider(document.getElementById("opinionSlider"), document.getElementById("opinionValue"), document.getElementById("opinionBar"));
+    syncSlider(
+        document.getElementById("opinionSlider"),
+        document.getElementById("opinionValue"),
+        document.getElementById("opinionBar")
+    );
     show(document.getElementById("sliderOpinionSection"));
 };
 
+// 意見スライダー → タイムライン
 document.getElementById("submitSlider").onclick = () => {
     data.op1 = parseInt(document.getElementById("opinionSlider").value, 10);
     showTimeline();
 };
 
+// タイムライン → 最終意見
 document.getElementById("toFinalBtn").onclick = () => {
     syncFinalSlider(data.op1);
     show(document.getElementById("finalOpinionSection"));
 };
 
+// 最終意見 → 次ラウンド or 終了
+document.getElementById("submitFinal").onclick = () => {
+    // --- スライダー値を確実に取得 ---
+    const op1Slider = document.getElementById("opinionSlider");
+    const finalSlider = document.getElementById("finalSlider");
+    data.op1 = parseInt(op1Slider.value, 10) || 0; // null/空のとき 0 に
+    data.op2 = parseInt(finalSlider.value, 10) || 0;
 
-// タイムライン
+    // --- 押されたイイね投稿を取得 ---
+    const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
+        .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
+    data.likedPosts = likedPosts; // results に送る対象
+
+    // --- 結果配列に追加 ---
+    results.push({ ...data, round: currentRound + 1 });
+
+    // --- ラウンドカウント更新 ---
+    currentRound++;
+
+    // --- 次ラウンド or アンケート終了 ---
+    if (currentRound >= rounds) {
+        finishAll(); // まとめて送信
+    } else {
+        // data を次ラウンド用にリセット
+        data = {
+            id: "p" + participantNumber,
+            group: participantGroup,
+            info: [],
+            op1: null,
+            op2: null,
+            likedPosts: []
+        };
+
+        // liked 状態もリセット
+        document.querySelectorAll(".like-btn.liked").forEach(btn => btn.classList.remove("liked"));
+
+        // 次ラウンドの基本情報表示
+        document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
+        show(document.getElementById("basicSection"));
+    }
+};
+
+// タイムライン表示関数
 function showTimeline() {
     const t = document.getElementById("timeline");
     t.innerHTML = "";
     const themeId = currentRound + 1;
     const posts = postsDB[participantGroup][themeId];
+
     posts.forEach((txt, i) => {
         const post = document.createElement("div");
         post.className = "post";
 
+        // avatar
         const av = document.createElement("div");
         av.className = "avatar";
         av.style.background = "#" + Math.floor(Math.random() * 16777215).toString(16);
         av.textContent = names[i % names.length][0];
 
+        // body
         const body = document.createElement("div");
         body.className = "post-body";
 
+        // いいね数（切り替え式）
         let liked = false;
         let likeCount = 0;
 
+        // いいねボタン（ハート）
         const likeBtn = document.createElement("button");
         likeBtn.className = "like-btn";
         likeBtn.innerHTML = `♡ <span class="like-num">0</span>`;
+
         likeBtn.addEventListener("click", () => {
-            liked = !liked;
+            liked = !liked; // ON / OFF 切替
             if (liked) {
                 likeCount = 1;
                 likeBtn.classList.add("liked");
+                // アニメーション
                 likeBtn.classList.add("pop");
                 setTimeout(() => likeBtn.classList.remove("pop"), 300);
                 likeBtn.innerHTML = `❤ <span class="like-num">${likeCount}</span>`;
@@ -674,14 +717,22 @@ function showTimeline() {
             }
         });
 
-        body.innerHTML = `<div class="meta"> <span class="name">${names[i % names.length]}</span> <span class="handle">@user${i}</span> </div> <div class="post-text">${txt}</div>`;
+        body.innerHTML = `
+            <div class="meta">
+                <span class="name">${names[i % names.length]}</span>
+                <span class="handle">@user${i}</span>
+            </div>
+            <div class="post-text">${txt}</div>
+        `;
         body.appendChild(likeBtn);
         post.appendChild(av);
         post.appendChild(body);
         t.appendChild(post);
     });
+
     show(document.getElementById("timelineSection"));
 }
+
 
 const DB_URL = "https://soturon-answers-default-rtdb.firebaseio.com/results.json";
 
@@ -714,6 +765,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body>
 </html>
+
 
 
 
