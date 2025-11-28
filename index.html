@@ -25,14 +25,6 @@ section{margin-top:18px;}
 .hidden{display:none;}
 ul{margin:8px 0 12px 18px;}
   
-.timeline{
-  margin-top: 12px;
-  padding-right: 6px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: inset 0 0 0 1px #eee;
-}
-  
 .post{display:flex;gap:12px;padding:12px 8px;border-bottom:1px solid #f0f0f0;background:#fff;margin-bottom:6px;border-radius:8px;align-items:flex-start;}
 .avatar{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex:0 0 48px;}
 .post-body{flex:1;}
@@ -277,6 +269,14 @@ section {
   margin-top: 10px;     /* 入力欄の上に余白 */
 }
 
+.timeline{
+  margin-top: 12px;
+  padding-right: 6px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px #eee;
+}
+
 
 
 </style>
@@ -412,6 +412,7 @@ section {
 <section id="timelineSection" class="hidden">
 <h2>X風タイムライン（主観的意見）</h2>
 <p class="small">以下は人々の主観的意見です。</p>
+<p>共感する意見があればいいねボタンを押してください。</p>
 <div class="timeline" id="timeline"></div>
 <div class="navRow">
 <button id="backToSlider" class="btn outline">戻る</button>
@@ -584,7 +585,7 @@ document.getElementById("toInfoBtn").onclick = () => {
   const infoCount = participantGroup === "A" || participantGroup === "C" ? 10 : 3;
   
   const infoForDisplay = factsDB[participantGroup][themeId].slice(0, infoCount);
-  document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("");
+  document.getElementById("infoBox").innerHTML = infoForDisplay.map(x => "<li>" + x + "</li>").join("<br><br>");
   
   show(document.getElementById("infoSection"));
   
@@ -744,6 +745,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
