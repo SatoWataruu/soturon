@@ -516,16 +516,14 @@ const postsDB = {
 };
 
 // ================== 以下、元コード通り ==================
+  
 let currentRound = 0;
 const rounds = 3;
 const results = [];
-let data = {
-    id: "p" + participantNumber,
-    group: participantGroup,
-    info: [],
-    op1: null,
-    op2: null
-};
+let participantNumber = parseInt(localStorage.getItem("participantNumber") || "1", 10);
+let participantGroup = "A"; // 適宜グループ分けに応じて変更
+let data = {id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
+
 
 const themeTitles = [
     "<strong>過去の選択を“別の選択肢にした場合の結果”として見せるデバイス「IFルック」 についての賛否</strong><p>説明：架空都市Aで「IFルック」というデバイスが開発された。IFルックとは、ユーザーの過去の選択肢と行動データを解析し、“別の選択をした世界のシミュレーション映像”を生成するデバイスである。このデバイスを使用することで、過去にもし別の選択をしていたら自分がどうなっていたかというのを、AIが推測して映像で疑似体験できることができます。</p>",
@@ -739,6 +737,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body> 
 </html>
+
 
 
 
