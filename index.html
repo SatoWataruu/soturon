@@ -293,7 +293,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート6</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート1</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -570,21 +570,6 @@ function show(section){
 }
 
 // HTMLイベント
-
-document.getElementById("startBtn").onclick = () => {
-    const ageValue = document.getElementById("ageInput").value;
-    const genderValue = document.getElementById("genderInput").value;
-    if (!ageValue || !genderValue) {
-        alert("年齢と性別を入力してください");
-        return;
-    }
-    data.age = parseInt(ageValue, 10);
-    data.gender = genderValue;
-    show(document.getElementById("basicSection"));
-    document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
-};
-
-  
 document.getElementById("agreeBtn").onclick=()=>{ 
   document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
   show(document.getElementById("basicSection"));
@@ -613,16 +598,23 @@ document.getElementById("toFinalBtn").onclick=()=>{
   show(document.getElementById("finalOpinionSection"));
 };
 
-document.getElementById("submitFinal").onclick=()=>{
-  data.op2=parseInt(document.getElementById("finalSlider").value,10);
-  results.push({...data, round:currentRound+1});
-  currentRound++;
-  if(currentRound>=rounds){finishAll();}
-  else{
-    data={id:"p"+participantNumber, group:participantGroup, info:[], op1:null, op2:null};
-    document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
-    show(document.getElementById("basicSection"));
-  }
+document.getElementById("submitFinal").onclick = () => {
+    data.op1 = parseInt(document.getElementById("opinionSlider").value, 10) || 0;
+    data.op2 = parseInt(document.getElementById("finalSlider").value, 10) || 0;
+    const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
+        .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
+    data.likedPosts = likedPosts;
+    results.push({ ...data, round: currentRound + 1 });
+    currentRound++;
+    if (currentRound >= rounds) {
+        hide(document.getElementById("finalOpinionSection"));
+        show(document.getElementById("influenceSection"));
+    } else {
+        data = { id: "p" + participantNumber, group: participantGroup, info: [], op1: null, op2: null, likedPosts: [] };
+        document.querySelectorAll(".like-btn.liked").forEach(btn => btn.classList.remove("liked"));
+        document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
+        show(document.getElementById("basicSection"));
+    }
 };
 
 // タイムライン
@@ -692,7 +684,6 @@ function showTimeline() {
 }
 
 
-
 // 完全終了処理
 
 const url = "https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec"; // ←必ず最新URLに置き換える
@@ -737,6 +728,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
