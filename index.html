@@ -634,33 +634,6 @@ document.getElementById("toFinalBtn").onclick = () => {
     show(document.getElementById("finalOpinionSection"));
 };
 
-document.getElementById("submitFinal").onclick = () => {
-    data.op1 = parseInt(document.getElementById("opinionSlider").value, 10) || 0;
-    data.op2 = parseInt(document.getElementById("finalSlider").value, 10) || 0;
-    const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
-        .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
-    data.likedPosts = likedPosts;
-    results.push({ ...data, round: currentRound + 1 });
-    currentRound++;
-    if (currentRound >= rounds) {
-        hide(document.getElementById("finalOpinionSection"));
-        show(document.getElementById("influenceSection"));
-    } else {
-        data = { id: "p" + participantNumber, group: participantGroup, info: [], op1: null, op2: null, likedPosts: [] };
-        document.querySelectorAll(".like-btn.liked").forEach(btn => btn.classList.remove("liked"));
-        document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`;
-        show(document.getElementById("basicSection"));
-    }
-};
-
-document.getElementById("submitInfluence").onclick = () => {
-    data.influence = parseInt(document.getElementById("influenceSlider").value, 10) || 0;
-    results.push({ ...data, round: "influence" });
-    hide(document.getElementById("influenceSection"));
-    show(document.getElementById("resultSection"));
-    document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
-    finishAll();
-};
 
 // タイムライン
 function showTimeline() {
@@ -741,6 +714,7 @@ document.getElementById("backToTimelineFromFinal").onclick = () => show(document
 </div>
 </body>
 </html>
+
 
 
 
