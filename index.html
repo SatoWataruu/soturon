@@ -625,28 +625,6 @@ document.getElementById("toInfoBtn").onclick = () => {
   // 送信用には data.info に入れない
 };
 
-// 最終意見 → 影響されやすさ
-document.getElementById("submitFinal").onclick = () => {
-  hide(document.getElementById("finalOpinionSection"));
-  show(document.getElementById("influenceSection"));
-};
-
-// 影響されやすさ → 最終意見に戻る
-document.getElementById("backToFinalFromInfluence").onclick = () => {
-  hide(document.getElementById("influenceSection"));
-  show(document.getElementById("finalOpinionSection"));
-};
-
-// 結果へ
-document.getElementById("submitInfluence").onclick = () => {
-  const influenceValue = document.getElementById("influenceSlider").value;
-  data.influence = influenceValue;
-
-  hide(document.getElementById("influenceSection"));
-  show(document.getElementById("resultSection"));
-
-  document.getElementById("resultData").textContent = JSON.stringify(data, null, 2);
-};
 
 
 document.getElementById("toOpinionBtn").onclick=()=>{
@@ -699,6 +677,42 @@ document.getElementById("submitFinal").onclick = () => {
     show(document.getElementById("basicSection"));
   }
 };
+
+// 3ラウンド目の最終意見後に性格アンケートを表示
+document.getElementById("submitFinal").onclick = () => {
+  data.op1 = parseInt(document.getElementById("opinionSlider").value, 10) || 0;
+  data.op2 = parseInt(document.getElementById("finalSlider").value, 10) || 0;
+
+  const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
+                           .map(btn => btn.closest(".post").querySelector(".post-text").textContent);
+  data.likedPosts = likedPosts;
+
+  results.push({ ...data, round: currentRound + 1 });
+
+  currentRound++;
+
+  if (currentRound >= rounds) {
+    // 最後のラウンドの後だけ性格アンケートを表示
+    hide(document.getElementById("finalOpinionSection"));
+    show(document.getElementById("influenceSection"));
+  } else {
+    // 次ラウンドの処理（省略）
+  }
+};
+
+// 性格アンケート submit
+document.getElementById("submitInfluence").onclick = () => {
+  data.influence = parseInt(document.getElementById("influenceSlider").value, 10) || 0;
+
+  results.push({ ...data, round: "influence" });
+
+  hide(document.getElementById("influenceSection"));
+  show(document.getElementById("resultSection"));
+
+  // デバッグ用
+  document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
+};
+
 
 
 // タイムライン
@@ -801,6 +815,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
