@@ -445,12 +445,36 @@ section {
   <!-- ★ navRow は flex の外に置く -->
   <div class="navRow" style="margin-top:12px;">
     <button id="backToTimelineFromFinal" class="btn outline">戻る</button>
-    <button id="submitFinal" class="btn primary">完了</button>
+    <button id="submitFinal" class="btn primary">次へ</button>
   </div>
 
 </section>
 
+<section id="influenceSection" class="hidden">
+  <h2>あなたは他人の意見に影響されやすいと思いますか？</h2>
+  <p class="small">
+    直感でお答えください。
+  </p>
 
+  <div style="margin-top:16px;">
+    <label style="display:block; margin-bottom:8px; font-weight:600;">
+      影響されやすさ（0 = 全くない / 100 = とてもある）
+    </label>
+
+    <input type="range" id="influenceSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+
+    <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:0.9rem;">
+      <span>0</span>
+      <span>50</span>
+      <span>100</span>
+    </div>
+  </div>
+
+  <div class="navRow" style="margin-top:20px;">
+    <button id="backToFinalFromInfluence" class="btn outline">戻る</button>
+    <button id="submitInfluence" class="btn primary">完了</button>
+  </div>
+</section>
 
 <section id="resultSection" class="hidden">
 <h2>回答完了しました　御協力ありがとうございました！ ＊2度以上このアンケートに回答しないようお願いいたします。</h2>
@@ -590,6 +614,29 @@ document.getElementById("toInfoBtn").onclick = () => {
   show(document.getElementById("infoSection"));
   
   // 送信用には data.info に入れない
+};
+
+// 最終意見 → 影響されやすさ
+document.getElementById("submitFinal").onclick = () => {
+  hide(document.getElementById("finalOpinionSection"));
+  show(document.getElementById("influenceSection"));
+};
+
+// 影響されやすさ → 最終意見に戻る
+document.getElementById("backToFinalFromInfluence").onclick = () => {
+  hide(document.getElementById("influenceSection"));
+  show(document.getElementById("finalOpinionSection"));
+};
+
+// 結果へ
+document.getElementById("submitInfluence").onclick = () => {
+  const influenceValue = document.getElementById("influenceSlider").value;
+  data.influence = influenceValue;
+
+  hide(document.getElementById("influenceSection"));
+  show(document.getElementById("resultSection"));
+
+  document.getElementById("resultData").textContent = JSON.stringify(data, null, 2);
 };
 
 
@@ -745,6 +792,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
