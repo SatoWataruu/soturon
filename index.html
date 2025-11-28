@@ -409,22 +409,35 @@ section {
 </section>
 
 <section id="finalOpinionSection" class="hidden">
-<h2>最終の意見（スライダーで選択）</h2>
-<p class="small">他の意見を読んだうえで、今のあなたの考えをもう一度選んでください。</p>
-<div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
-<div id="finalBar" style="height:100%; width:50%; border-radius: 8px;"></div>
-<div id="finalValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
-<div id="op1Marker" style="position:absolute; height:100%; width:2px; background:red; top:0;"></div>
-<div id="op1Label" style="position:absolute; top:-20px; font-size:0.85rem; font-weight:bold; color:red; transform:translateX(-50%); pointer-events:none;"></div>
-</div>
-<input type="range" id="finalSlider" min="0" max="100" value="50" step="1" style="width:100%;">
-<div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:4px;">
-<span>0 反対</span><span>50 どちらでもない</span><span>100 賛成</span>
-<div class="navRow" style="margin-top:12px;">
-<button id="backToTimelineFromFinal" class="btn outline">戻る</button>
-<button id="submitFinal" class="btn primary">完了</button>
-</div>
+  <h2>最終の意見（スライダーで選択）</h2>
+  <p class="small">他の意見を読んだうえで、今のあなたの考えをもう一度選んでください。</p>
+
+  <!-- ★ バー + 現在の値 -->
+  <div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
+    <div id="finalBar" style="height:100%; width:50%; border-radius: 8px;"></div>
+    <div id="finalValue"
+         style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">
+      50
+    </div>
+  </div>
+
+  <!-- ★ スライダー本体 -->
+  <input type="range" id="finalSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+
+  <!-- ★ ラベル（左・中央・右のズレが絶対に起こらない flexbox 対応版） -->
+  <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:4px;">
+    <span>0 反対</span>
+    <span>50 どちらでもない</span>
+    <span>100 賛成</span>
+  </div>
+
+  <!-- ★ ナビゲーション -->
+  <div class="navRow" style="margin-top:12px;">
+    <button id="backToTimelineFromFinal" class="btn outline">戻る</button>
+    <button id="submitFinal" class="btn primary">完了</button>
+  </div>
 </section>
+
 
 <section id="resultSection" class="hidden">
 <h2>回答完了しました　ありがとうございました。</h2>
@@ -719,6 +732,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
