@@ -290,19 +290,20 @@ section {
 /* Likert全体コンテナ */
 .likert-container {
   display: flex;
-  justify-content: center;
-  gap: 16px;
+  justify-content: space-between; /* 左右ラベルと均等に配置 */
+  align-items: center;
+  gap: 12px;
   margin: 20px 0;
 }
 
-/* Likertの横並び */
+/* 横並びの円 */
 .likert {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0;
   position: relative;
-  gap: 24px;
+  gap: 12px;
+  flex: 1; /* ラベルまで広げる */
 }
 
 /* circle ボタン */
@@ -310,7 +311,7 @@ section {
   border-radius: 50%;
   border: 3px solid #ccc;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
   position: relative;
 }
 
@@ -326,22 +327,21 @@ section {
 /* hoverで少し拡大 */
 .circle:hover { transform: scale(1.15); }
 
-/* 選択時の色分け */
+/* 選択時の色 */
 .circle[data-value="1"].selected,
 .circle[data-value="2"].selected,
-.circle[data-value="3"].selected { border-color: #45b48c; background: #45b48c33; }
+.circle[data-value="3"].selected { border-color: green; background: #45b48c; } /* 右側＝そう思う */
 
-.circle[data-value="4"].selected { border-color: #888; background: #8883; }
+.circle[data-value="4"].selected { border-color: #888; background: #888; } /* 中央＝どちらでもない */
 
 .circle[data-value="5"].selected,
 .circle[data-value="6"].selected,
-.circle[data-value="7"].selected { border-color: #9b5de5; background: #9b5de533; }
+.circle[data-value="7"].selected { border-color: purple; background: #9b5de5; } /* 左側＝そう思わない */
 
-/* 真ん中テキスト */
+/* 中央テキスト */
 .center-text {
   position: absolute;
-  top: 40px;
-  width: 110px;
+  top: 36px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.8rem;
@@ -350,20 +350,38 @@ section {
 }
 
 /* ラベル */
-.label-left { color: #45b48c; font-weight: bold; }
-.label-right { color: #9b5de5; font-weight: bold; }
+.label-left { color: green; font-weight: bold; }
+.label-right { color: purple; font-weight: bold; }
 
 /* スマホ対応 */
 @media (max-width: 600px) {
-  .likert { gap: 16px; }
+  .likert { gap: 10px; }
+  .circle[data-value="1"],
+  .circle[data-value="7"] { width: 44px; height: 44px; }
+  .circle[data-value="2"],
+  .circle[data-value="6"] { width: 38px; height: 38px; }
+  .circle[data-value="3"],
+  .circle[data-value="5"] { width: 32px; height: 32px; }
+  .circle[data-value="4"] { width: 24px; height: 24px; }
 }
+
+.circle[data-value="1"].selected,
+.circle[data-value="2"].selected,
+.circle[data-value="3"].selected { border-color: purple; background: #9b5de5; }
+
+.circle[data-value="4"].selected { border-color: #888; background: #888; }
+
+.circle[data-value="5"].selected,
+.circle[data-value="6"].selected,
+.circle[data-value="7"].selected { border-color: green; background: #45b48c; }
+
 
 </style>
 
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -900,6 +918,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
