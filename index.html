@@ -287,19 +287,18 @@ section {
   box-sizing: border-box;        /* はみ出しを防止 */
 }
 
-/* circle ボタン共通 */
+/* circle 共通 */
 .circle {
   border-radius: 50%;
   border: 3px solid #ccc;
   cursor: pointer;
   transition: 0.2s ease;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 左右の大きさ */
+/* 左右サイズ */
 .circle[data-value="1"],
 .circle[data-value="7"] { width: 52px; height: 52px; }
 .circle[data-value="2"],
@@ -309,7 +308,6 @@ section {
 .circle[data-value="4"] { width: 28px; height: 28px; }
 
 /* 選択時の色 */
-/* 左側（そう思わない・紫） */
 .circle[data-value="1"].selected,
 .circle[data-value="2"].selected,
 .circle[data-value="3"].selected {
@@ -317,13 +315,11 @@ section {
   background-color: #7c3aed33;
 }
 
-/* 中央（どちらでもない・グレー） */
 .circle[data-value="4"].selected {
   border-color: #888;
   background-color: #8883;
 }
 
-/* 右側（そう思う・緑） */
 .circle[data-value="5"].selected,
 .circle[data-value="6"].selected,
 .circle[data-value="7"].selected {
@@ -334,19 +330,19 @@ section {
 /* hover効果 */
 .circle:hover { transform: scale(1.15); }
 
-/* 中央テキスト */
+/* 中央テキスト（縦表示解除） */
 .circle.center .center-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #333;
   text-align: center;
   pointer-events: none;
 }
 
-/* ラベル位置調整 */
+/* ラベル */
 .label-left { color: #7c3aed; font-weight: bold; }
 .label-right { color: #16a34a; font-weight: bold; }
 
@@ -355,8 +351,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0;
-  gap: 24px;
+  gap: 20px;
 }
 
 
@@ -365,7 +360,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -676,21 +671,19 @@ const circles = document.querySelectorAll(".circle");
 const seikakuValue = document.getElementById("seikakuValue");
 
 circles.forEach(circle => {
-  circle.onclick = () => {
+  circle.addEventListener("click", () => {
     seikakuAnswer = parseInt(circle.dataset.value, 10);
 
-    // 数字 or 中央だけ特別表示
-    seikakuValue.textContent =
-      seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
+    // 中央だけ特別表示
+    seikakuValue.textContent = seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
 
     // 全部リセット
     circles.forEach(c => c.classList.remove("selected"));
 
     // 押したやつだけ塗る
     circle.classList.add("selected");
-  };
+  });
 });
-
 
 
 
@@ -902,6 +895,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
