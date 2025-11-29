@@ -594,7 +594,7 @@ document.getElementById("toInfoBtn").onclick=()=>{
   const themeId=currentRound+1;
   const infoCount = participantGroup==="A"||participantGroup==="C"?10:3;
   data.info=factsDB[participantGroup][themeId].slice(0,infoCount);
-  document.getElementById("infoBox").innerHTML=data.info.map(x=>"<li>"+x+"</li>").join("");
+  document.getElementById("infoBox").innerHTML=data.info.map(x=>"<li>"+x+"</li>").join("<br>");
   show(document.getElementById("infoSection"));
 };
 
@@ -623,8 +623,14 @@ document.getElementById("submitFinal").onclick = () => {
     const likedPosts = Array.from(document.querySelectorAll(".like-btn.liked"))
         .map(btn => btn.closest(".post").querySelector(".post-text").textContent); 
     data.likedPosts = likedPosts; // results に送る対象 
-    // --- 結果配列に追加 ---
-    results.push({ ...data, round: currentRound + 1 }); 
+    // --- 結果配列に追加（info を除く） ---
+　　const { info, ...cleanData } = data;
+
+　　results.push({
+    ...cleanData,
+    round: currentRound + 1
+　　});
+
     // --- ラウンドカウント更新 ---
     currentRound++; 
     // --- 次ラウンド or アンケート終了 ---
@@ -752,6 +758,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
