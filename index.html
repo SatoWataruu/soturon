@@ -293,7 +293,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート2</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート7</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -570,8 +570,24 @@ function show(section){
 }
 
 // HTMLイベント
+document.getElementById("startBtn").onclick = () => { 
+    // 入力必須チェック
+    const ageValue = document.getElementById("ageInput").value; 
+    const genderValue = document.getElementById("genderInput").value; 
+    if (!ageValue || !genderValue) { 
+        alert("年齢と性別を入力してください"); 
+        return; // 入力がない場合は進めない 
+    } 
+    // 基本情報を data に保存
+    data.age = parseInt(ageValue, 10); 
+    data.gender = genderValue; 
+    // 基本情報セクションを隠して基本説明セクションを表示
+    show(document.getElementById("basicSection")); 
+    document.getElementById("basicText").innerHTML = <br>テーマ: ${themeTitles[currentRound]}; 
+}; 
+
 document.getElementById("agreeBtn").onclick=()=>{ 
-  document.getElementById("basicText").innerHTML=`あなたは <strong>グループ ${participantGroup}</strong> です。<br>テーマ: ${themeTitles[currentRound]}`;
+  document.getElementById("basicText").innerHTML=`テーマ: ${themeTitles[currentRound]}`;
   show(document.getElementById("basicSection"));
 };
 
@@ -737,6 +753,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
