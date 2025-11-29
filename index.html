@@ -386,39 +386,85 @@ section {
   color: #666;
 }
 
+.likert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+  position: relative;
+  gap: 24px; /* ★ 円の間隔を広くする */
+}
+
+/* 基本円 */
+.circle {
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+}
+
+/* ★ 左ほど大きい → 中央小さい → 右また大きい */
+.circle[data-value="1"] { width: 52px; height: 52px; }
+.circle[data-value="2"] { width: 44px; height: 44px; }
+.circle[data-value="3"] { width: 36px; height: 36px; }
+.circle[data-value="4"] { width: 28px; height: 28px; }  /* 真ん中が最小 */
+.circle[data-value="5"] { width: 36px; height: 36px; }
+.circle[data-value="6"] { width: 44px; height: 44px; }
+.circle[data-value="7"] { width: 52px; height: 52px; }
+
+/* ホバーで少し拡大 */
+.circle:hover {
+  transform: scale(1.15);
+}
+
+/* 真ん中だけ text */
+.center-text {
+  position: absolute;
+  top: 40px;
+  width: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: #666;
+  pointer-events: none;
+}
+
 /* 左側（肯定）色 */
-.circle:nth-child(1).selected,
-.circle:nth-child(2).selected,
-.circle:nth-child(3).selected {
+.circle[data-value="1"].selected,
+.circle[data-value="2"].selected,
+.circle[data-value="3"].selected {
   border-color: #45b48c;
   background: #45b48c33;
 }
 
 /* 中央 */
-.circle.center.selected {
+.circle[data-value="4"].selected {
   border-color: #888;
   background: #8883;
 }
 
 /* 右側（否定）色 */
-.circle:nth-child(5).selected,
-.circle:nth-child(6).selected,
-.circle:nth-child(7).selected {
+.circle[data-value="5"].selected,
+.circle[data-value="6"].selected,
+.circle[data-value="7"].selected {
   border-color: #9b5de5;
   background: #9b5de533;
 }
 
+/* ラベル */
 .label-left {
   float: left;
   color: #45b48c;
   font-weight: bold;
 }
-
 .label-right {
   float: right;
   color: #9b5de5;
   font-weight: bold;
 }
+
+
 
 
 
@@ -739,14 +785,19 @@ const seikakuButtons = document.querySelectorAll(".likert-btn");
 const seikakuValue = document.getElementById("seikakuValue");
 
 seikakuButtons.forEach(btn => {
-  btn.onclick = () => {
-    seikakuAnswer = parseInt(btn.dataset.value, 10);
+  btn.addEventListener("click", () => {
+
+    seikakuAnswer = Number(btn.dataset.value);
     seikakuValue.textContent = seikakuAnswer;
 
+    // 全部リセット
     seikakuButtons.forEach(b => b.classList.remove("active"));
+
+    // 今押したやつだけ強調
     btn.classList.add("active");
-  };
+  });
 });
+
 
 
 // 画面切替
@@ -957,6 +1008,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
