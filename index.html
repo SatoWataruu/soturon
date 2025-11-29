@@ -287,35 +287,19 @@ section {
   box-sizing: border-box;        /* はみ出しを防止 */
 }
 
-/* Likert全体コンテナ */
-.likert-container {
-  display: flex;
-  justify-content: space-between; /* 左右ラベルと均等に配置 */
-  align-items: center;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-/* 横並びの円 */
-.likert {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  gap: 12px;
-  flex: 1; /* ラベルまで広げる */
-}
-
-/* circle ボタン */
+/* circle ボタン共通 */
 .circle {
   border-radius: 50%;
   border: 3px solid #ccc;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: 0.2s ease;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 左から順に大きさ */
+/* 左右の大きさ */
 .circle[data-value="1"],
 .circle[data-value="7"] { width: 52px; height: 52px; }
 .circle[data-value="2"],
@@ -324,56 +308,56 @@ section {
 .circle[data-value="5"] { width: 36px; height: 36px; }
 .circle[data-value="4"] { width: 28px; height: 28px; }
 
-/* hoverで少し拡大 */
-.circle:hover { transform: scale(1.15); }
-
 /* 選択時の色 */
+/* 左側（そう思わない・紫） */
 .circle[data-value="1"].selected,
 .circle[data-value="2"].selected,
-.circle[data-value="3"].selected { border-color: green; background: #45b48c; } /* 右側＝そう思う */
+.circle[data-value="3"].selected {
+  border-color: #7c3aed;
+  background-color: #7c3aed33;
+}
 
-.circle[data-value="4"].selected { border-color: #888; background: #888; } /* 中央＝どちらでもない */
+/* 中央（どちらでもない・グレー） */
+.circle[data-value="4"].selected {
+  border-color: #888;
+  background-color: #8883;
+}
 
+/* 右側（そう思う・緑） */
 .circle[data-value="5"].selected,
 .circle[data-value="6"].selected,
-.circle[data-value="7"].selected { border-color: purple; background: #9b5de5; } /* 左側＝そう思わない */
+.circle[data-value="7"].selected {
+  border-color: #16a34a;
+  background-color: #16a34a33;
+}
+
+/* hover効果 */
+.circle:hover { transform: scale(1.15); }
 
 /* 中央テキスト */
-.center-text {
+.circle.center .center-text {
   position: absolute;
-  top: 36px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.8rem;
-  color: #666;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  color: #333;
+  text-align: center;
   pointer-events: none;
 }
 
-/* ラベル */
-.label-left { color: green; font-weight: bold; }
-.label-right { color: purple; font-weight: bold; }
+/* ラベル位置調整 */
+.label-left { color: #7c3aed; font-weight: bold; }
+.label-right { color: #16a34a; font-weight: bold; }
 
-/* スマホ対応 */
-@media (max-width: 600px) {
-  .likert { gap: 10px; }
-  .circle[data-value="1"],
-  .circle[data-value="7"] { width: 44px; height: 44px; }
-  .circle[data-value="2"],
-  .circle[data-value="6"] { width: 38px; height: 38px; }
-  .circle[data-value="3"],
-  .circle[data-value="5"] { width: 32px; height: 32px; }
-  .circle[data-value="4"] { width: 24px; height: 24px; }
+/* 横並び */
+.likert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+  gap: 24px;
 }
-
-.circle[data-value="1"].selected,
-.circle[data-value="2"].selected,
-.circle[data-value="3"].selected { border-color: purple; background: #9b5de5; }
-
-.circle[data-value="4"].selected { border-color: #888; background: #888; }
-
-.circle[data-value="5"].selected,
-.circle[data-value="6"].selected,
-.circle[data-value="7"].selected { border-color: green; background: #45b48c; }
 
 
 </style>
@@ -381,7 +365,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -555,7 +539,7 @@ section {
   <p>あなたは他人の意見に流されやすいと感じますか？</p>
 
   <div class="likert-container">
-    <span class="label-left">そう思う</span>
+    <span class="label-left">そう思わない</span>
 
     <div class="likert">
       <div class="circle" data-value="1"></div>
@@ -571,7 +555,7 @@ section {
       <div class="circle" data-value="7"></div>
     </div>
 
-    <span class="label-right">そう思わない</span>
+    <span class="label-right">そう思う</span>
   </div>
 
   <div class="navRow" style="margin-top:12px;">
@@ -918,6 +902,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
