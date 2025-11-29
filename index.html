@@ -287,13 +287,70 @@ section {
   box-sizing: border-box;        /* はみ出しを防止 */
 }
 
+.likert-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.label-left {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.label-right {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.likert-buttons {
+  display: flex;
+  gap: 14px;
+}
+
+.likert-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #9ca3af;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.likert-btn:nth-child(1),
+.likert-btn:nth-child(7) {
+  width: 40px;
+  height: 40px;
+}
+
+.likert-btn:nth-child(2),
+.likert-btn:nth-child(6) {
+  width: 34px;
+  height: 34px;
+}
+
+.likert-btn:nth-child(3),
+.likert-btn:nth-child(5) {
+  width: 30px;
+  height: 30px;
+}
+
+.likert-btn.active {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+
 
 </style>
 
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート70</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート100</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -462,25 +519,29 @@ section {
 
 </section>
 
-<section id="seikakuSection" class="hidden">
+<section id="seikakuSection">
   <h2>性格調査</h2>
-  <p class="small">あなたは他人の意見に流されやすいと感じますか？</p>
+  <p>あなたは他人の意見に流されやすいと感じますか？</p>
 
-  <div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
-    <div id="seikakuBar" style="height:100%; width:50%; border-radius: 8px;"></div>
-    <div id="seikakuValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
+  <div class="likert-container">
 
-    <!-- marker は不要なら消してOK -->
+    <span class="label-left">そう思わない</span>
+
+    <div class="likert-buttons">
+      <button class="likert-btn" data-value="1"></button>
+      <button class="likert-btn" data-value="2"></button>
+      <button class="likert-btn" data-value="3"></button>
+      <button class="likert-btn" data-value="4"></button>
+      <button class="likert-btn" data-value="5"></button>
+      <button class="likert-btn" data-value="6"></button>
+      <button class="likert-btn" data-value="7"></button>
+    </div>
+
+    <span class="label-right">そう思う</span>
   </div>
 
-  <input type="range" id="seikakuSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+  <p style="text-align:center;">選択：<span id="seikakuValue">未選択</span></p>
 
-  <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:4px;">
-    <span>0 そう思わない</span>
-    <span>50 どちらでもない</span>
-    <span>100 そう思う</span>
-  </div>
-  
   <div class="navRow" style="margin-top:12px;">
     <button id="backToTimelineFromSeikaku" class="btn outline">戻る</button>
     <button id="Owari" class="btn primary">完了</button>
@@ -592,15 +653,20 @@ function syncFinalSlider(op1){
   slider.addEventListener("input",update);
 }
 
-const seikakuSlider = document.getElementById("seikakuSlider");
-const seikakuBar = document.getElementById("seikakuBar");
+let seikakuAnswer = null;
+
+const seikakuButtons = document.querySelectorAll(".likert-btn");
 const seikakuValue = document.getElementById("seikakuValue");
 
-seikakuSlider.oninput = () => {
-  const v = seikakuSlider.value;
-  seikakuValue.textContent = v;
-  seikakuBar.style.width = v + "%";
-};
+seikakuButtons.forEach(btn => {
+  btn.onclick = () => {
+    seikakuAnswer = parseInt(btn.dataset.value, 10);
+    seikakuValue.textContent = seikakuAnswer;
+
+    seikakuButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  };
+});
 
 
 // 画面切替
@@ -785,9 +851,14 @@ function finishAll() {
 }
 
 document.getElementById("Owari").onclick=()=>{ 
-     // ★ seikaku を結果に追加
+  
+     if (seikakuAnswer === null) {
+        alert("どれか1つ選んでください！");
+        return;
+    }
+
     const last = results[results.length - 1];
-    last.seikakun = Number(seikakuSlider.value);
+    last.seikakun = seikakuAnswer;
 
   finishAll();
 };
@@ -806,6 +877,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
