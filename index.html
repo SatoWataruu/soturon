@@ -465,6 +465,63 @@ section {
 }
 
 
+.likert-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.likert-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  border: 2px solid #9ca3af;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* 中央だけ細長く */
+.likert-btn.middle {
+  width: 110px;
+  height: 32px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+
+/* active 時に塗りつぶされる */
+.likert-btn.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+  transform: scale(1.15);
+}
+
+/* 端に行くほど大きくする */
+.likert-btn[data-value="1"],
+.likert-btn[data-value="7"] {
+  width: 40px;
+  height: 40px;
+}
+
+.likert-btn[data-value="2"],
+.likert-btn[data-value="6"] {
+  width: 36px;
+  height: 36px;
+}
+
+.likert-btn[data-value="3"],
+.likert-btn[data-value="5"] {
+  width: 34px;
+  height: 34px;
+}
+
+/* クリック時のふわっと */
+.likert-btn:active {
+  transform: scale(1.25);
+}
 
 
 
@@ -474,7 +531,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート200</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -785,17 +842,15 @@ const seikakuButtons = document.querySelectorAll(".likert-btn");
 const seikakuValue = document.getElementById("seikakuValue");
 
 seikakuButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
+  btn.onclick = () => {
+    seikakuAnswer = parseInt(btn.dataset.value, 10);
 
-    seikakuAnswer = Number(btn.dataset.value);
-    seikakuValue.textContent = seikakuAnswer;
+    seikakuValue.textContent =
+      seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
 
-    // 全部リセット
     seikakuButtons.forEach(b => b.classList.remove("active"));
-
-    // 今押したやつだけ強調
     btn.classList.add("active");
-  });
+  };
 });
 
 
@@ -1008,6 +1063,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
