@@ -395,14 +395,6 @@ section {
   gap: 24px; /* ★ 円の間隔を広くする */
 }
 
-/* 基本円 */
-.circle {
-  border-radius: 50%;
-  border: 3px solid #ccc;
-  cursor: pointer;
-  transition: 0.2s ease;
-  position: relative;
-}
 
 /* ★ 左ほど大きい → 中央小さい → 右また大きい */
 .circle[data-value="1"] { width: 52px; height: 52px; }
@@ -539,7 +531,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -1076,6 +1068,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
