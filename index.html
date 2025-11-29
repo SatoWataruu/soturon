@@ -710,32 +710,32 @@ function showTimeline() {
 
 // 完全終了処理
 
-const url = "https://script.google.com/macros/s/AKfycbyKC0pQSzV3WoxFOqzQhC_njj6tN7YACqcxixrmJbCSdL8HB8cbMBSEXVDwFGHUBpq7/exec"; // ←必ず最新URLに置き換える
+const DB_URL = "https://soturon-answers-default-rtdb.firebaseio.com/results.json";
 
-// 完全終了処理
 function finishAll() {
-  // 参加者番号を増やす
-  participantNumber++;
-  localStorage.setItem("participantNumber", participantNumber);
 
-  // 結果を画面に表示
-  document.getElementById("resultData").textContent = JSON.stringify(results, null, 2);
-  show(document.getElementById("resultSection"));
+    // 参加者番号をインクリメントして保存
+    participantNumber++;
+    localStorage.setItem("participantNumber", participantNumber);
 
-  // 各結果をGASに送信
-  results.forEach(data => {
-    fetch(url, {
-      method: "POST",
-      mode: "cors", // ←スマホから送信するため必須
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(json => console.log("送信成功:", json))
-    .catch(err => console.error("送信失敗:", err));
-  });
+    // 画面に結果を表示
+    document.getElementById("resultData").textContent =
+        JSON.stringify(results, null, 2);
+
+    // 結果表示セクションへ
+    show(document.getElementById("resultSection"));
+
+    // Firebase に送信
+    results.forEach(data => {
+        fetch(DB_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+        .then(resp => resp.json())
+        .then(json => console.log("Firebase送信成功:", json))
+        .catch(err => console.error("Firebase送信失敗:", err));
+    });
 }
 
 
@@ -752,6 +752,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
