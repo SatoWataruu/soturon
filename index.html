@@ -343,6 +343,84 @@ section {
   border-color: #4f46e5;
 }
 
+.likert-container {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.likert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  position: relative;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+.circle:hover {
+  transform: scale(1.15);
+}
+
+/* 真ん中だけテキスト付 */
+.circle.center {
+  border-color: #bbb;
+}
+
+.center-text {
+  position: absolute;
+  top: 40px;
+  width: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* 左側（肯定）色 */
+.circle:nth-child(1).selected,
+.circle:nth-child(2).selected,
+.circle:nth-child(3).selected {
+  border-color: #45b48c;
+  background: #45b48c33;
+}
+
+/* 中央 */
+.circle.center.selected {
+  border-color: #888;
+  background: #8883;
+}
+
+/* 右側（否定）色 */
+.circle:nth-child(5).selected,
+.circle:nth-child(6).selected,
+.circle:nth-child(7).selected {
+  border-color: #9b5de5;
+  background: #9b5de533;
+}
+
+.label-left {
+  float: left;
+  color: #45b48c;
+  font-weight: bold;
+}
+
+.label-right {
+  float: right;
+  color: #9b5de5;
+  font-weight: bold;
+}
+
+
 
 
 </style>
@@ -350,7 +428,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート150</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート200</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -385,7 +463,7 @@ section {
 公開される場合も匿名化され、個人が特定される形では扱われません。</p>
 
 <hr>
-
+  
 <h3>アンケートの進み方</h3>
 
 <p>このアンケートは、以下のステップで進みます。  
@@ -524,29 +602,31 @@ section {
   <p>あなたは他人の意見に流されやすいと感じますか？</p>
 
   <div class="likert-container">
+    <span class="label-left">そう思う</span>
 
-    <span class="label-left">そう思わない</span>
+    <div class="likert">
+      <div class="circle" data-value="1"></div>
+      <div class="circle" data-value="2"></div>
+      <div class="circle" data-value="3"></div>
 
-    <div class="likert-buttons">
-      <button class="likert-btn" data-value="1"></button>
-      <button class="likert-btn" data-value="2"></button>
-      <button class="likert-btn" data-value="3"></button>
-      <button class="likert-btn" data-value="4"></button>
-      <button class="likert-btn" data-value="5"></button>
-      <button class="likert-btn" data-value="6"></button>
-      <button class="likert-btn" data-value="7"></button>
+      <div class="circle center" data-value="4">
+        <span class="center-text">どちらでもない</span>
+      </div>
+
+      <div class="circle" data-value="5"></div>
+      <div class="circle" data-value="6"></div>
+      <div class="circle" data-value="7"></div>
     </div>
 
-    <span class="label-right">そう思う</span>
+    <span class="label-right">そう思わない</span>
   </div>
-
-  <p style="text-align:center;">選択：<span id="seikakuValue">未選択</span></p>
 
   <div class="navRow" style="margin-top:12px;">
     <button id="backToTimelineFromSeikaku" class="btn outline">戻る</button>
     <button id="Owari" class="btn primary">完了</button>
   </div>
 </section>
+
 
 
 <section id="resultSection" class="hidden">
@@ -877,6 +957,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
