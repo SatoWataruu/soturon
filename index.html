@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>架空の事柄について賛否を問うアンケート</title>
+<title>架空のテーマについて賛否を問うアンケート</title>
 <style>
 :root{
   --bg:#ffffff;
@@ -287,176 +287,6 @@ section {
   box-sizing: border-box;        /* はみ出しを防止 */
 }
 
-.likert-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: 20px 0;
-}
-
-.label-left {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.label-right {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.likert-buttons {
-  display: flex;
-  gap: 14px;
-}
-
-.likert-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid #9ca3af;
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.likert-btn:nth-child(1),
-.likert-btn:nth-child(7) {
-  width: 40px;
-  height: 40px;
-}
-
-.likert-btn:nth-child(2),
-.likert-btn:nth-child(6) {
-  width: 34px;
-  height: 34px;
-}
-
-.likert-btn:nth-child(3),
-.likert-btn:nth-child(5) {
-  width: 30px;
-  height: 30px;
-}
-
-.likert-btn.active {
-  background-color: #4f46e5;
-  border-color: #4f46e5;
-}
-
-.likert-container {
-  width: 100%;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.likert {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-  position: relative;
-}
-
-.circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 3px solid #ccc;
-  cursor: pointer;
-  position: relative;
-  transition: 0.2s ease;
-}
-
-.circle:hover {
-  transform: scale(1.15);
-}
-
-/* 真ん中だけテキスト付 */
-.circle.center {
-  border-color: #bbb;
-}
-
-.center-text {
-  position: absolute;
-  top: 40px;
-  width: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.8rem;
-  color: #666;
-}
-
-.likert {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 30px 0;
-  position: relative;
-  gap: 24px; /* ★ 円の間隔を広くする */
-}
-
-
-/* ★ 左ほど大きい → 中央小さい → 右また大きい */
-.circle[data-value="1"] { width: 52px; height: 52px; }
-.circle[data-value="2"] { width: 44px; height: 44px; }
-.circle[data-value="3"] { width: 36px; height: 36px; }
-.circle[data-value="4"] { width: 28px; height: 28px; }  /* 真ん中が最小 */
-.circle[data-value="5"] { width: 36px; height: 36px; }
-.circle[data-value="6"] { width: 44px; height: 44px; }
-.circle[data-value="7"] { width: 52px; height: 52px; }
-
-/* ホバーで少し拡大 */
-.circle:hover {
-  transform: scale(1.15);
-}
-
-/* 真ん中だけ text */
-.center-text {
-  position: absolute;
-  top: 40px;
-  width: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.8rem;
-  color: #666;
-  pointer-events: none;
-}
-
-/* 左側（肯定）色 */
-.circle[data-value="1"].selected,
-.circle[data-value="2"].selected,
-.circle[data-value="3"].selected {
-  border-color: #45b48c;
-  background: #45b48c33;
-}
-
-/* 中央 */
-.circle[data-value="4"].selected {
-  border-color: #888;
-  background: #8883;
-}
-
-/* 右側（否定）色 */
-.circle[data-value="5"].selected,
-.circle[data-value="6"].selected,
-.circle[data-value="7"].selected {
-  border-color: #9b5de5;
-  background: #9b5de533;
-}
-
-/* ラベル */
-.label-left {
-  float: left;
-  color: #45b48c;
-  font-weight: bold;
-}
-.label-right {
-  float: right;
-  color: #9b5de5;
-  font-weight: bold;
-}
-
-
 .likert-row {
   display: flex;
   justify-content: space-between;
@@ -513,16 +343,6 @@ section {
 /* クリック時のふわっと */
 .likert-btn:active {
   transform: scale(1.25);
-}
-
-.circle.active {
-  background: #4f46e5;   /* 濃い色で塗りつぶす */
-  border-color: #4f46e5;
-  transform: scale(1.2); /* 少し大きく */
-}
-
-.circle.selected {
-  background-color: var(--force-fill) !important;
 }
 
 
@@ -1068,6 +888,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
