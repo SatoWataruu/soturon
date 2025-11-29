@@ -287,71 +287,62 @@ section {
   box-sizing: border-box;        /* はみ出しを防止 */
 }
 
-/* circle 共通 */
-.circle {
-  border-radius: 50%;
-  border: 3px solid #ccc;
-  cursor: pointer;
-  transition: 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 左右サイズ */
-.circle[data-value="1"],
-.circle[data-value="7"] { width: 52px; height: 52px; }
-.circle[data-value="2"],
-.circle[data-value="6"] { width: 44px; height: 44px; }
-.circle[data-value="3"],
-.circle[data-value="5"] { width: 36px; height: 36px; }
-.circle[data-value="4"] { width: 28px; height: 28px; }
-
-/* 選択時の色 */
-.circle[data-value="1"].selected,
-.circle[data-value="2"].selected,
-.circle[data-value="3"].selected {
-  border-color: #7c3aed;
-  background-color: #7c3aed33;
-}
-
-.circle[data-value="4"].selected {
-  border-color: #888;
-  background-color: #8883;
-}
-
-.circle[data-value="5"].selected,
-.circle[data-value="6"].selected,
-.circle[data-value="7"].selected {
-  border-color: #16a34a;
-  background-color: #16a34a33;
-}
-
-/* hover効果 */
-.circle:hover { transform: scale(1.15); }
-
-/* 中央テキスト（縦表示解除） */
-.circle.center .center-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.8rem;
-  color: #333;
-  text-align: center;
-  pointer-events: none;
-}
-
-/* ラベル */
-.label-left { color: #7c3aed; font-weight: bold; }
-.label-right { color: #16a34a; font-weight: bold; }
-
-/* 横並び */
-.likert {
+.likert-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.likert-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  border: 2px solid #9ca3af;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* 中央だけ細長く */
+.likert-btn.middle {
+  width: 110px;
+  height: 32px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+
+/* active 時に塗りつぶされる */
+.likert-btn.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+  transform: scale(1.15);
+}
+
+/* 端に行くほど大きくする */
+.likert-btn[data-value="1"],
+.likert-btn[data-value="7"] {
+  width: 40px;
+  height: 40px;
+}
+
+.likert-btn[data-value="2"],
+.likert-btn[data-value="6"] {
+  width: 36px;
+  height: 36px;
+}
+
+.likert-btn[data-value="3"],
+.likert-btn[data-value="5"] {
+  width: 34px;
+  height: 34px;
+}
+
+/* クリック時のふわっと */
+.likert-btn:active {
+  transform: scale(1.25);
 }
 
 
@@ -360,7 +351,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -529,36 +520,37 @@ section {
 
 </section>
 
-<section id="seikakuSection" class="hidden">
+<div id="seikakuSection" class="hidden">
   <h2>性格調査</h2>
   <p>あなたは他人の意見に流されやすいと感じますか？</p>
 
-  <div class="likert-container">
-    <span class="label-left">そう思わない</span>
+  <div class="likert-wrapper">
+    <div class="likert-row">
 
-    <div class="likert">
-      <div class="circle" data-value="1"></div>
-      <div class="circle" data-value="2"></div>
-      <div class="circle" data-value="3"></div>
+      <div class="likert-btn" data-value="1"></div>
+      <div class="likert-btn" data-value="2"></div>
+      <div class="likert-btn" data-value="3"></div>
+      <div class="likert-btn" data-value="4"></div>
+      <div class="likert-btn" data-value="5"></div>
+      <div class="likert-btn" data-value="6"></div>
+      <div class="likert-btn" data-value="7"></div>
 
-      <div class="circle center" data-value="4">
-        <span class="center-text">どちらでもない</span>
-      </div>
-
-      <div class="circle" data-value="5"></div>
-      <div class="circle" data-value="6"></div>
-      <div class="circle" data-value="7"></div>
     </div>
 
-    <span class="label-right">そう思う</span>
+    <div class="likert-labels">
+      <span>そう思わない</span>
+      <span>どちらでもない</span>
+      <span>そう思う</span>
+    </div>
   </div>
 
-  <div class="navRow" style="margin-top:12px;">
+  <p style="text-align:center;">選択：<span id="seikakuValue">-</span></p>
+
+  <div class="navRow">
     <button id="backToTimelineFromSeikaku" class="btn outline">戻る</button>
     <button id="Owari" class="btn primary">完了</button>
   </div>
-</section>
-
+</div>
 
 
 <section id="resultSection" class="hidden">
@@ -895,6 +887,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
