@@ -535,7 +535,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -842,20 +842,25 @@ function syncFinalSlider(op1){
 
 let seikakuAnswer = null;
 
-const seikakuButtons = document.querySelectorAll(".likert-btn");
+const circles = document.querySelectorAll(".circle");
 const seikakuValue = document.getElementById("seikakuValue");
 
-seikakuButtons.forEach(btn => {
-  btn.onclick = () => {
-    seikakuAnswer = parseInt(btn.dataset.value, 10);
+circles.forEach(circle => {
+  circle.onclick = () => {
+    seikakuAnswer = parseInt(circle.dataset.value, 10);
 
+    // 数字 or 中央だけ特別表示
     seikakuValue.textContent =
       seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
 
-    seikakuButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+    // 全部リセット
+    circles.forEach(c => c.classList.remove("selected"));
+
+    // 押したやつだけ塗る
+    circle.classList.add("selected");
   };
 });
+
 
 
 
@@ -1067,6 +1072,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
