@@ -293,7 +293,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート17</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート20</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -354,7 +354,10 @@ section {
 
 <p><strong>7. 最終の意見</strong><br>
 追加情報・他者意見を読んだうえで、考えが変化したかどうかをスライダーで回答します。</p>
-<p>この一連の流れを3テーマ分繰り返してもらいます＞
+<p>この一連の流れを3テーマ分繰り返してもらいます。
+
+<p><strong>8. 性格調査</strong><br>
+性格に関する質問をを1つだけお聞きします。</p>
 
 <p><strong>8. 回答完了</strong><br>
 </p>
@@ -458,6 +461,32 @@ section {
   </div>
 
 </section>
+
+<section id="seikakuSection" class="hidden">
+  <h2>性格調査</h2>
+  <p class="small">あなたは他人の意見に流されやすいと感じますか？</p>
+
+  <div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
+    <div id="seikakuBar" style="height:100%; width:50%; border-radius: 8px;"></div>
+    <div id="seikakuValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
+
+    <!-- marker は不要なら消してOK -->
+  </div>
+
+  <input type="range" id="seikakuSlider" min="0" max="100" value="50" step="1" style="width:100%;">
+
+  <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:4px;">
+    <span>0 そう思わない</span>
+    <span>50 どちらでもない</span>
+    <span>100 そう思う</span>
+  </div>
+  
+  <div class="navRow" style="margin-top:12px;">
+    <button id="backToTimelineFromSeikaku" class="btn outline">戻る</button>
+    <button id="Owari" class="btn primary">完了</button>
+  </div>
+</section>
+
 
 <section id="resultSection" class="hidden">
 <h2>回答完了しました　御協力ありがとうございました！ ＊2度以上このアンケートに回答しないようお願いいたします。</h2>
@@ -563,6 +592,17 @@ function syncFinalSlider(op1){
   slider.addEventListener("input",update);
 }
 
+const seikakuSlider = document.getElementById("seikakuSlider");
+const seikakuBar = document.getElementById("seikakuBar");
+const seikakuValue = document.getElementById("seikakuValue");
+
+seikakuSlider.oninput = () => {
+  const v = seikakuSlider.value;
+  seikakuValue.textContent = v;
+  seikakuBar.style.width = v + "%";
+};
+
+
 // 画面切替
 function show(section){
   document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
@@ -635,7 +675,7 @@ document.getElementById("submitFinal").onclick = () => {
     currentRound++; 
     // --- 次ラウンド or アンケート終了 ---
     if (currentRound >= rounds) { 
-        finishAll(); // まとめて送信 
+        how(document.getElementById("seikakuSection"));
     } else { 
         // data を次ラウンド用にリセット 
         data = { id: "p" + participantNumber, group: participantGroup, info: [], op1: null, op2: null, likedPosts: [] }; 
@@ -744,6 +784,14 @@ function finishAll() {
     });
 }
 
+document.getElementById("Owari").onclick=()=>{ 
+     // ★ seikaku を結果に追加
+    const last = results[results.length - 1];
+    last.seikakun = Number(seikakuSlider.value);
+
+  finishAll();
+};
+
 
 
 
@@ -758,6 +806,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
