@@ -309,6 +309,29 @@ section {
   font-weight: 600;
 }
 
+/* 色パターン */
+.circle.selected[data-value="1"],
+.circle.selected[data-value="2"],
+.circle.selected[data-value="3"] {
+  background: #a855f7;   /* 紫 */
+  border-color: #a855f7;
+  color: white;
+}
+
+.circle.selected[data-value="4"] {
+  background: #6b7280;   /* グレー（中立） */
+  border-color: #6b7280;
+  color: white;
+}
+
+.circle.selected[data-value="5"],
+.circle.selected[data-value="6"],
+.circle.selected[data-value="7"] {
+  background: #22c55e;   /* 緑 */
+  border-color: #22c55e;
+  color: white;
+}
+
 /* 選択時（JSが .selected 付ける） */
 .circle.selected {
   background: #22c55e;
@@ -333,28 +356,7 @@ section {
   color: #6b7280;
 }
 
-/* 色パターン */
-.circle.selected[data-value="1"],
-.circle.selected[data-value="2"],
-.circle.selected[data-value="3"] {
-  background: #a855f7;   /* 紫 */
-  border-color: #a855f7;
-  color: white;
-}
 
-.circle.selected[data-value="4"] {
-  background: #6b7280;   /* グレー（中立） */
-  border-color: #6b7280;
-  color: white;
-}
-
-.circle.selected[data-value="5"],
-.circle.selected[data-value="6"],
-.circle.selected[data-value="7"] {
-  background: #22c55e;   /* 緑 */
-  border-color: #22c55e;
-  color: white;
-}
 
 
 
@@ -533,43 +535,30 @@ section {
 
 </section>
 
-<div id="seikakuSection" class="hidden">
-  <h2>性格調査</h2>
-  <p>あなたは他人の意見に流されやすいと感じますか？</p>
+<section id="seikakuSection">
+  <h2>あなたは他人の意見に流されやすいと感じますか？</h2>
 
-<div class="scale-row">
-  <div class="circle-wrap">
+  <p class="description">
+    左が「そう思わない」、中央が「どちらでもない」、右が「そう思う」です。
+  </p>
+
+  <div class="scale-row">
     <div class="circle" data-value="1">1</div>
-    <span class="label">そう思わない</span>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="2">2</div>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="3">3</div>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="4">4</div>
-    <span class="label">どちらでもない</span>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="5">5</div>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="6">6</div>
-  </div>
-
-  <div class="circle-wrap">
     <div class="circle" data-value="7">7</div>
-    <span class="label">そう思う</span>
   </div>
-</div>
 
+  <p class="legend">
+    <span>そう思わない</span>
+    <span>どちらでもない</span>
+    <span>そう思う</span>
+  </p>
+
+  <p id="seikakuValue"></p>
 </section>
 
 
@@ -907,6 +896,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
