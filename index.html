@@ -296,13 +296,12 @@ section {
 }
 
 .circle-wrapper {
+  flex: 1;               /* ←これ！均等に広がる */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 130px;  /* 円＋ラベルが収まる高さ */
 }
+
 
 /* 円が上下中央に来るようにする */
 .circle {
@@ -361,19 +360,12 @@ section {
   transform: scale(1.1);
 }
 
-  @media (max-width: 480px) {
-  .circle-wrapper {
-    width: 40px;   /* 少し縮小 */
-  }
-
+/* スマホ調整 */
+@media (max-width: 480px) {
   .circle {
     width: 34px;
     height: 34px;
     font-size: 14px;
-  }
-
-  .label {
-    font-size: 11px;
   }
 }
 
@@ -936,6 +928,7 @@ document.getElementById("backToTimelineFromSeikaku").onclick = ()=>show(document
 </div>
 </body>
 </html>
+
 
 
 
