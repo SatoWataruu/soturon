@@ -293,15 +293,16 @@ section {
   align-items: center;
   margin: 20px 0;
   width: 100%;
+  gap: 0;                    /* ← 追加：余白をなくして溢れ防止 */
 }
 
 .circle-wrapper {
-  flex: 1;               /* ←これ！均等に広がる */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 0;              /* ← 追加：flex がはみ出すのを防ぐ */
 }
-
 
 /* 円が上下中央に来るようにする */
 .circle {
@@ -928,6 +929,7 @@ document.getElementById("backToTimelineFromSeikaku").onclick = ()=>show(document
 </div>
 </body>
 </html>
+
 
 
 
