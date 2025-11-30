@@ -745,7 +745,8 @@ document.getElementById("startBtn").onclick = () => {
     data.gender = genderValue; 
     // 基本情報セクションを隠して基本説明セクションを表示
     show(document.getElementById("basicSection")); 
-    document.getElementById("basicText").innerHTML = `テーマ(round/3): ${themeTitles[currentRound]}`; 
+    document.getElementById("basicText").innerHTML =`テーマ (${currentRound + 1} / 3): ${themeTitles[currentRound]}`;
+
 }; 
 
 document.getElementById("agreeBtn").onclick=()=>{ 
@@ -934,6 +935,7 @@ document.getElementById("backToTimelineFromSeikaku").onclick = ()=>show(document
 </div>
 </body>
 </html>
+
 
 
 
