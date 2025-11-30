@@ -491,7 +491,7 @@ section {
 
 <section id="sliderOpinionSection" class="hidden">
 <h2>意見（スライダーで選択）</h2>
-<p class="small" id="sliderDesc">あなたの意見を選択してください。</p>
+<p><strong>このテーマについて、あなたの意見を選択してください。</strong></p>
 <div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
 <div id="opinionBar" style="height:100%; width:50%; border-radius: 8px;"></div>
 <div id="opinionValue" style="position:absolute; width:100%; text-align:center; top:0; line-height:30px; font-weight:bold;">50</div>
@@ -508,7 +508,7 @@ section {
 
 <section id="timelineSection" class="hidden">
 <h2>X風タイムライン（主観的意見）</h2>
-<p>以下は現実世界で事前調査した人々の主観的意見です。（こちらは架空ではありません。）</p>
+<p>以下は現実世界で事前調査した、人々の主観的意見です。（こちらは架空ではありません。）</p>
 <p><strong>共感する意見があればいいねボタンを押してください。</strong></p>
 <div class="timeline" id="timeline"></div>
 <div class="navRow">
@@ -519,7 +519,7 @@ section {
 
 <section id="finalOpinionSection" class="hidden">
   <h2>最終の意見（スライダーで選択）</h2>
-  <p class="small">他の意見を読んだうえで、今のあなたの考えをもう一度選んでください。</p>
+  <p><strong>他の意見を読んだうえで、今のあなたの考えをもう一度選んでください。</strong></p>
 
   <div style="position: relative; height: 30px; background: #e5e7eb; border-radius: 8px; margin-bottom: 6px;">
     <div id="finalBar" style="height:100%; width:50%; border-radius: 8px;"></div>
@@ -745,7 +745,7 @@ document.getElementById("startBtn").onclick = () => {
     data.gender = genderValue; 
     // 基本情報セクションを隠して基本説明セクションを表示
     show(document.getElementById("basicSection")); 
-    document.getElementById("basicText").innerHTML = `テーマ: ${themeTitles[currentRound]}`; 
+    document.getElementById("basicText").innerHTML = `テーマ(round/3): ${themeTitles[currentRound]}`; 
 }; 
 
 document.getElementById("agreeBtn").onclick=()=>{ 
@@ -934,6 +934,7 @@ document.getElementById("backToTimelineFromSeikaku").onclick = ()=>show(document
 </div>
 </body>
 </html>
+
 
 
 
