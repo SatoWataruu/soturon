@@ -333,6 +333,30 @@ section {
   color: #6b7280;
 }
 
+/* 色パターン */
+.circle.selected[data-value="1"],
+.circle.selected[data-value="2"],
+.circle.selected[data-value="3"] {
+  background: #a855f7;   /* 紫 */
+  border-color: #a855f7;
+  color: white;
+}
+
+.circle.selected[data-value="4"] {
+  background: #6b7280;   /* グレー（中立） */
+  border-color: #6b7280;
+  color: white;
+}
+
+.circle.selected[data-value="5"],
+.circle.selected[data-value="6"],
+.circle.selected[data-value="7"] {
+  background: #22c55e;   /* 緑 */
+  border-color: #22c55e;
+  color: white;
+}
+
+
 
 
 </style>
@@ -340,7 +364,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -514,22 +538,38 @@ section {
   <p>あなたは他人の意見に流されやすいと感じますか？</p>
 
 <div class="scale-row">
+  <div class="circle-wrap">
     <div class="circle" data-value="1">1</div>
-    <div class="circle" data-value="2">2</div>
-    <div class="circle" data-value="3">3</div>
-    <div class="circle" data-value="4">4</div>
-    <div class="circle" data-value="5">5</div>
-    <div class="circle" data-value="6">6</div>
-    <div class="circle" data-value="7">7</div>
+    <span class="label">そう思わない</span>
   </div>
 
-  <p class="legend">
-    <span>そう思わない</span>
-    <span>どちらでもない</span>
-    <span>そう思う</span>
-  </p>
+  <div class="circle-wrap">
+    <div class="circle" data-value="2">2</div>
+  </div>
 
-  <p id="seikakuValue"></p>
+  <div class="circle-wrap">
+    <div class="circle" data-value="3">3</div>
+  </div>
+
+  <div class="circle-wrap">
+    <div class="circle" data-value="4">4</div>
+    <span class="label">どちらでもない</span>
+  </div>
+
+  <div class="circle-wrap">
+    <div class="circle" data-value="5">5</div>
+  </div>
+
+  <div class="circle-wrap">
+    <div class="circle" data-value="6">6</div>
+  </div>
+
+  <div class="circle-wrap">
+    <div class="circle" data-value="7">7</div>
+    <span class="label">そう思う</span>
+  </div>
+</div>
+
 </section>
 
 
@@ -867,6 +907,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
