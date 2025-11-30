@@ -353,11 +353,9 @@ section {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
-  color: #6b7280;
+  color: #000000;   /* ← 黒 */
+  padding: 0 25px;  /* ← これで位置がズレにくくなる */
 }
-
-
-
 
 
 
@@ -366,7 +364,7 @@ section {
 </head>
 <body>
 <div class="container">
-<h1 id="experimentTitle">架空のテーマについて賛否を問うアンケート</h1>
+<h1 id="experimentTitle">架空の事柄について賛否を問うアンケート</h1>
 <p>この実験はブラウザ内で完結する調査です。最初に基礎説明 → 追加情報(架空の事実) → 賛否 → SNSタイムライン → 最終賛否 の順で進みます。</p>
 <p>＊回答が完全に完了するまでリロードしないようおねがいします。</p>
 
@@ -536,13 +534,13 @@ section {
 </section>
 
 <section id="seikakuSection">
-  <h2>あなたは他人の意見に流されやすいと感じますか？</h2>
+  <h2>性格調査</h2>
 
-  <p class="description">
-    左が「そう思わない」、中央が「どちらでもない」、右が「そう思う」です。
+  <p>
+    あなたは他人の意見に流されやすいと感じますか？
   </p>
 
-  <div class="scale-row">
+  <div class="scale-row" class="hidden">
     <div class="circle" data-value="1">1</div>
     <div class="circle" data-value="2">2</div>
     <div class="circle" data-value="3">3</div>
@@ -676,7 +674,7 @@ circles.forEach(circle => {
     seikakuAnswer = parseInt(circle.dataset.value, 10);
 
     // 中央だけ特別表示
-    seikakuValue.textContent = seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
+    //seikakuValue.textContent = seikakuAnswer === 4 ? "どちらでもない" : seikakuAnswer;
 
     // 全部リセット
     circles.forEach(c => c.classList.remove("selected"));
@@ -896,6 +894,7 @@ document.getElementById("backToTimelineFromFinal").onclick = ()=>show(document.g
 </div>
 </body>
 </html>
+
 
 
 
