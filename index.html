@@ -805,7 +805,7 @@ document.getElementById("submitFinal").onclick = () => {
         // liked 状態もリセット 
         document.querySelectorAll(".like-btn.liked").forEach(btn => btn.classList.remove("liked")); 
         // 次ラウンドの基本情報表示 
-        document.getElementById("basicText").innerHTML = `<br>テーマ: ${themeTitles[currentRound]}`; 
+        document.getElementById("basicText").innerHTML = `テーマ (${currentRound + 1} / 3): ${themeTitles[currentRound]}`;
         show(document.getElementById("basicSection")); 
     } 
 }; 
@@ -935,6 +935,7 @@ document.getElementById("backToTimelineFromSeikaku").onclick = ()=>show(document
 </div>
 </body>
 </html>
+
 
 
 
